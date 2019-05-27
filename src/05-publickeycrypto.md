@@ -15,14 +15,20 @@
 >
 > $x \equiv c_r  (\mod d_r)$
 
-$x \equiv 5 (\mod 6)$
-$x \equiv 33 (\mod 35)$
+### Important note regarding exam questions about chinese remainder theorem:\
+Given a set of equations on the form $x_i \equiv y_i (\mod z_i)$\
+The Chinese remainder theorem can only be used if the set $Z = z_1, ... ,z_n$ are pairwise coprime.
 
-set $d_1 = 6$, and $d_2=35$, then $n = d_1\cdot d_2 = 210$
+Example from exam 2018:
 
-see slides from lecture 7 for an example.
-I can't write this.
+> Which of the following pairs of equations can be solved using the chinese remainder theorem?\
+> (a) $x \equiv 3 (\mod 6)$ and $x \equiv 4 (\mod 8)$\
+> (b) $x \equiv 3 (\mod 6)$ and $x \equiv 4 (\mod 10)$\
+> (c) $x \equiv 3 (\mod 7)$ and $x \equiv 4 (\mod 12)$\
+> (d) $x \equiv 3 (\mod 7)$ and $x \equiv 4 (\mod 14)$
 
+Looking at the _z_ values (the moduluses), we see that only 7 and 12 are coprime (answer c).\
+the other options are divisible by 2 (6 and 8, 6 and 10) or a factor of each other (7 and 14).
 
 ## Euler function $\phi$
 > For a positive integer _n_, the euler function $\phi(n)$  denotes the number of positive integers
