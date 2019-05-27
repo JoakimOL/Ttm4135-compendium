@@ -2,7 +2,7 @@
 
 ## Chinese remainder theorem
 
->let _d1_..._dr_, be pairwise relatively prime and n = d1d2...dr, given any integers c_i there
+>let _d1_, ... ,_dr_, be pairwise relatively prime and n = d1,d2, ... , dr, given any integers $c_i$ there
 > exists a unique integer x with $0 \leq x < n$ such that
 >
 > $x \equiv c_1  (\mod d_1)$
@@ -15,9 +15,9 @@
 >
 > $x \equiv c_r  (\mod d_r)$
 
-### Important note regarding exam questions about chinese remainder theorem:\
+### Exam question example using chinese remainder theorem:\
 Given a set of equations on the form $x_i \equiv y_i (\mod z_i)$\
-The Chinese remainder theorem can only be used if the set $Z = z_1, ... ,z_n$ are pairwise coprime.
+Like stated above, the Chinese remainder theorem can only be used if the set $Z = (z_1, ... ,z_n)$ are pairwise coprime.
 
 Example from exam 2018:
 
