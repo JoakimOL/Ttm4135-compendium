@@ -77,12 +77,12 @@ The construction suffers from some weaknesses as well:\
 Still, the Merkle-Damgård constuction is used in standard and former standard hash functions (MD5,
 SHA-1, SHA-2)
 
-# Standardized hash functions
+## Standardized hash functions
 
 Slides lack many implementational details, so I'm guessing its not important for the course. This
 section only includes some basic key points.
 
-## MDx family of hashes
+### MDx family of hashes
 
 Old and insecure by todays standards. MD2, 4 and 5 have been used in practice, but are all easily
 broken.
@@ -90,11 +90,11 @@ broken.
 Is based on the Merkle-Damgård construction. They all output 128 bits. Recall the section about
 the birthday paradox and how many bits were recommended.
 
-## SHA-0 and SHA-1
+### SHA-0 and SHA-1
 Based off of MDx hashes (which makes it a Merkle-Damgård constuction), but with added complexity and a bigger output size of 160 bits (weak).
 Both are broken, but this is quite recent. First attack of SHA-1 was found in 2017.
 
-## SHA-2 family
+### SHA-2 family
 Several versions of SHA-2 exist, hence the term "family of SHA-2 hashes". They are developed in
 response to attacks on MD5 and SHA-1. Still a Merkle-Damgård construction.
 
@@ -120,14 +120,14 @@ Since the padding requires at least 1 bit of pad and either 64 or 128 bits of en
 sometimes results in adding a new block.
 
 
-## SHA-3
+### SHA-3
 The MDx and previous SHA hashes were based on the same design, which has encountered unexpected
 attacks. The SHA-3 hash is the result of a competition (just like AES), held in 2007-2008. This
 ended up with a new function that was standardized in 2015 and is NOT based on the Merkle-Damgård
 construction. It uses a sponge construction, whatever that is.
 
 
-# HMAC
+## HMAC
 A MAC constructed from any iterated cryptographic hash function (like SHA256 etc).
 HMAC is defined as: $HMAC(M,K) = H( (K \oplus opad) || H (( K \oplus ipad ) || M ) )$\
 
@@ -144,6 +144,8 @@ HMAC is often used as a pseudorandom function for deriving keys (since they are 
 seem random)
 
 # Authenticated encryption
+
+## Combining encryption and MAC
 
 How do you ensure both confidentiality (no one can read your messages) and integrity (you know the
 message is from a legitimate sender)? A proposed solution is to split your assumed established shared
