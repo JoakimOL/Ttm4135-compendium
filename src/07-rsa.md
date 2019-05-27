@@ -100,3 +100,20 @@ Key points:
 4. provides security against chosen ciphertext attacks  (and possibly chosen plaintext, not 100%
    sure)
 
+## Attacks against RSA
+A properly set up RSA scheme has pretty good security. Many proposed attacks on RSA are avoided by
+using standardised padding schemes.
+
+The best known attack against RSA is factorization of _n_, which
+is a hard problem. The attack is prevented by choosing a large enough _n_.
+
+Another candidate is to find the private key from the public key. It is supposedly not
+feasible, and at least as hard as factorizing _n_.
+
+Other possibilities are the use of quantum computers, which do not exist yet, and timing attacks,
+which have countermeasures.
+
+It is an open problem whether it is possible to crack RSA without factorizing _n_.
+
+In other words, the biggest flaw of RSA isn't the algorithm itself. Key generation flaws due to poor
+random number generation is often the culprit.
