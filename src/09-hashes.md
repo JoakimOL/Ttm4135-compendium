@@ -201,3 +201,16 @@ Output $C = (P \oplus MSB_{plen}(S)) || (T \oplus MSB_{tlen}(S_0))$,\
     and   $MSB_{n}(S)$ returns the _n_ most significants bits from _S_.
 
 
+### Galois Counter mode (GCM)
+A problem with CCM is that the formatting of _N_,_A_ and _P_ requires the length of both _A_ and
+_P_. This prevents it from being used in a streaming application. GCM overcomes this limitation. It
+combines CTR mode on a block cipher, _E_ (AES is a good and common choice), with a hash function called
+`GHASH`.
+
+Skipping implementational details.
+
+The receiver receives the ciphertext, _C_, the nonce, _N_, the tag, _T_, and the authenticated data,
+_A_. This is all the receiver needs to recompute _T_ and check whether it matches the received _T_.
+If it does, the receiver can decrypt _C_ just like in CTR-mode.
+
+This is used in TLS.
