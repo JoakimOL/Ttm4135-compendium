@@ -245,3 +245,40 @@ function and get the corresponding tag out. (chosen plaintext attacks)
 
 It is not feasible for an attacker to produce a valid forgery.
 
+### Basic CBC-MAC (CMAC)
+we've only discussed the properties of a MAC, not how the tag is created. CMAC is one way of
+creating a tag, using a block cipher. This is unforgeable as long as the message length is fixed.
+
+let _M_ be the message consisting of _n_ blocks. To compute CBC-MAC(_M_,_k_), do:\
+
+\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\Input{Message M, initialization vector IV, Key K}
+\Output{CMAC tag}
+\BlankLine
+    \For{$t\gets1$ \KwTo $n$}{
+        ${C_t} = E({M_t} \oplus C{t-1}, K)$, where $C_0 = IV$
+    }
+\Return $T=C_t$
+\caption{CBC-MAC}
+\end{algorithm}
+
+Note that unlike the CBC-mode, the IV has to be fixed and public. A random IV is not secure in
+this application. _E_ is defined as the encryption for CBC-mode, see CBC-section.
+
+### standardized CBC-MAC
+A secure version of CMAC is standardized with some changes from the basic version:
+
+- The original key, _K_, is used to derive two new keys, $K_1$ and $K_2$.
+- One is used in the basic algorithm, the other is XORed into the final message block. Pad if neccessary.
+- The IV is set to all zeroes.
+- The MAC tag is the $T_{len}$ most significant bits of the output.
+
+Choice of $T_{len}$ depends on the degree of security needed. The standard states that 64 bits lets
+most applications resist guessing attacks. More generally, the standard states that the tag should
+be at least $log_2 \frac{I}{R}$ bits long, where _I_ is how many invalid messages that can be
+detected before you change the key and _R_ is the accepted risk that a false message is accepted.
+
+
