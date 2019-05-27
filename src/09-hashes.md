@@ -175,5 +175,29 @@ the plaintext?)
 
 Some schemes do, however, provide both confidentiality and integrity with one key.
 
-## Galois Counter Mode
+## Modes for Authenticated encryption
+There are two types of input data:
+
+- Payload data: both encrypted and authenticated
+- Associated data: only authenticated
+
+Both modes of operation use the CTR-mode to add confidentiality, but add integrity in different
+ways.
+
+### Counter with CBC-MAC mode (CCM)
+This mode offers confidentiality for the payload, and authentication for both payload and associated
+data.
+
+The nonce, _N_, payload, _P_ and associated data, _A_ needs to be formatted to produce a set of
+blocks. The format is complex and different implementations exist in different standards. By blindly
+following the slides, we see that the lengths of _N_ and _P_ are included in the first block. If _A_
+is non-zero, it is formatted from the second block up to its length.
+
+After formatting, we compute a $T_{len}$ bits long tag for these blocks. Using normal counter mode,
+we compute _m_ blocks, where $m = \lceil{\frac{P_{len}}{128}}\rceil$
+
+Output $C = (P \oplus MSB_{plen}(S)) || (T \oplus MSB_{tlen}(S_0))$,\
+    where $S = S_1, ... , S_m$,\
+    and   $MSB_{n}(S)$ returns the _n_ most significants bits from _S_.
+
 
