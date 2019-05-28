@@ -32,16 +32,22 @@ Claude Shannon discussed two important properties of encryption:
 Shannon proposed to use these techniques repeatedly using the concept of `product cipher`
 
 Good block ciphers exihibit a socalled avalanche effect. Both a `key avalanche` and a `plaintext
-avalanche` is wanted, according to Shannons properties mentioned above.\
+avalanche` is wanted, according to Shannons properties mentioned above.
+
 A key avalanche is where a
 small change in the key results in a big change in ciphertext. This relates to Shannons notion of
-confusion. Try encrypting the same text using a simple substitution cipher and then swap two
+confusion.
+
+Try encrypting the same text using a simple substitution cipher and then swap two
 characters in the key. Observe small changes in ciphertext. Next, try doing the same using a more
 sophisticated encryption scheme like AES with an online tool. Observe a huge difference after
-altering key.\
+altering key.
+
 A plaintext avalanche is when a small change in plaintext results in a big change in the ciphertext.
 Ideally we'd like each bit to have a 50% probability to flip. This is related to Shannons notion of
-diffusion. Try encrypting the same text using a simple substitution cipher and then change one letter in the plaintext. Observe small changes in ciphertext. Next, try doing the same using a more sophisticated encryption scheme like AES with an online tool. Observe a huge difference after altering the plaintext.\
+diffusion.
+
+Try encrypting the same text using a simple substitution cipher and then change one letter in the plaintext. Observe small changes in ciphertext. Next, try doing the same using a more sophisticated encryption scheme like AES with an online tool. Observe a huge difference after altering the plaintext.
 
 
 ## Product cipher
