@@ -11,7 +11,7 @@ properties that make them desirable/undesirable in certain applications.
 
  - the message is n blocks in length
  - P Plaintext
- - C Ciphertxtt
+ - C Ciphertext
  - K Key
  - E Encryption function
  - D Decryption function
@@ -31,11 +31,11 @@ Claude Shannon discussed two important properties of encryption:
 
 Shannon proposed to use these techniques repeatedly using the concept of `product cipher`
 
-Good block ciphers exihibit a socalled avalanche effect. Both a `key avalanche` and a `plaintext
-avalanche` is wanted, according to Shannons properties mentioned above.
+Good block ciphers exhibit a so-called avalanche effect. Both a `key avalanche` and a `plaintext
+avalanche` is wanted, according to Shannon's properties mentioned above.
 
 A key avalanche is where a
-small change in the key results in a big change in ciphertext. This relates to Shannons notion of
+small change in the key results in a big change in ciphertext. This relates to Shannon's notion of
 confusion.
 
 Try encrypting the same text using a simple substitution cipher and then swap two
@@ -44,7 +44,7 @@ sophisticated encryption scheme like AES with an online tool. Observe a huge dif
 altering key.
 
 A plaintext avalanche is when a small change in plaintext results in a big change in the ciphertext.
-Ideally we'd like each bit to have a 50% probability to flip. This is related to Shannons notion of
+Ideally we'd like each bit to have a 50% probability to flip. This is related to Shannon's notion of
 diffusion.
 
 Try encrypting the same text using a simple substitution cipher and then change one letter in the plaintext. Observe small changes in ciphertext. Next, try doing the same using a more sophisticated encryption scheme like AES with an online tool. Observe a huge difference after altering the plaintext.
@@ -61,12 +61,12 @@ $C = E(P,K) = f_r (...  (f_2(f_1(P,K_1),K_2)...), K_r)$
 
 ## Iterated cipher
 A special class of product ciphers are called iterated ciphers.
-The encryption process in an iterated cipher is divded into $r$ similar `rounds`, and the
+The encryption process in an iterated cipher is divided into $r$ similar `rounds`, and the
 sub-encryption functions are all the same function, _g_, called the `round function`.
 Each key, $K_i$, is derived from the `master key`, _K_. Each key $K_i$ are called `round keys` or
 `subkeys` and are derived using a process called the `key schedule`.
 
-### Encryption in interated ciphers
+### Encryption in iterated ciphers
 $W_0 = P$\
 $W_1 = g(W_0, K_1)$\
 $W_2 = g(W_1, K_2)$\
@@ -74,9 +74,9 @@ $... ... ...$\
 $W_r = g(W_{r-1}, K_r)$\
 $C = W_r$\
 
-### Decryption in interated ciphers
+### Decryption in iterated ciphers
 in order to decrypt the messages, an inverse of the round function, $g^{-1}$, must be available.
-the inverse must satisfy
+The inverse must satisfy
 $g^{-1}(g(W,K_i),K_i) = W$, $\forall K_i, W$
 
 ## Feistel ciphers
@@ -146,7 +146,7 @@ rounds + 1) subkeys in total (since you need an initial subkey for the initial r
 ### Security in AES
 No severely dangerous attacks are known yet. If you reduce the number of rounds, security decreases.
 If an attacker gets hold of cipher text encrypted with a key that has a special relation to the
-master key, a related key attack is possible. What is a related key attack? this course doesn't
+master key, a related key attack is possible. What is a related key attack? This course doesn't
 know.
 
 
@@ -158,14 +158,14 @@ insecure. Using different standardised _modes of operation_ with different level
 efficiency. This can also be used for authentication and integrity.
 
 ### Randomized encryption
-We can see patterns if the schemes arent random. Typically this is achieved using an initialization
+We can see patterns if the schemes aren't random. Typically this is achieved using an initialization
 vector IV, which may need to be either random or unique. One can also use a state variable that
 changes.
 
 ### Efficiency
-There are several features of the modes that affect its efficiency. These do not affect seccurity,
+There are several features of the modes that affect its efficiency. These do not affect security,
 but we would like to encrypt our data before the millennia is over. Features like possibility of
-parrallell processing etc.
+parallel processing etc.
 
 ### Padding
 some modes require the plantext to consist of only whole blocks. If the plaintext is not a length
@@ -179,7 +179,7 @@ time.
 
 - Not randomised.
 - Padding required.
-- We can do parallell encryption/decryption though.
+- We can do parallel encryption/decryption though.
 - Errors propagate within blocks.
 - No initialization vector IV.
 
@@ -193,12 +193,12 @@ Decryption: $C_t = D(C_t, k) \oplus  C_t-1, where C_0 = IV$
 - randomised.
 - Padding required.
 - Errors propagate within blocks and to specific bits of next blocks
-- We can do parallell decryption, no encryption.
+- We can do parallel decryption, no encryption.
 - IV must be random
 
 ### Counter mode (CTR)
 
-A counter and nounce is used. They are initialized by a randomly chosen value N. T_t is the
+A counter and nonce is used. They are initialized by a randomly chosen value N. T_t is the
 concatenation between the nonce and block number t, N||t.
 $O_t  = E(T_t, k)$
 
@@ -213,7 +213,7 @@ A one bit change in the ciphertext produces a one bit error in the plaintext at 
 - randomised.
 - Padding not required.
 - Errors occur in specific bits of the current block
-- both parallell encryption and decryption
+- both parallel encryption and decryption
 - Variable, nonce, which must be unique
 
 Good for accessing specific plaintext blocks without decrypting the whole stream.
@@ -221,13 +221,13 @@ Good for accessing specific plaintext blocks without decrypting the whole stream
 ## Message integrity
 How to ensure that the message is not altered in the transmission? We treat message integrity and
 message authentication as the same thing. This includes preventing an adversary from fucking with
-your blocks. Message integrity can be provided whether or not encrpytion is used for
+your blocks. Message integrity can be provided whether or not encryption is used for
 confidentiality.
 
 ### Message Authentication Code (MAC)
 
 A mechanism for ensuring message integrity.
-On input secret key, _K_ , and an arbitrary length message _M_, a MAC algorithm otuts a short
+On input secret key, _K_ , and an arbitrary length message _M_, a MAC algorithm outputs a short
 fixed-length string, _T_, known as the tag.
 
 $T = MAC(M,K)$
@@ -255,7 +255,7 @@ It is not feasible for an attacker to produce a valid forgery.
 we've only discussed the properties of a MAC, not how the tag is created. CMAC is one way of
 creating a tag, using a block cipher. This is unforgeable as long as the message length is fixed.
 
-let _M_ be the message consisting of _n_ blocks. To compute CBC-MAC(_M_,_k_), do:\
+Let _M_ be the message consisting of _n_ blocks. To compute CBC-MAC(_M_,_k_), do:\
 
 \begin{algorithm}[H]
 \DontPrintSemicolon
@@ -278,7 +278,7 @@ this application. _E_ is defined as the encryption for CBC-mode, see CBC-section
 A secure version of CMAC is standardized with some changes from the basic version:
 
 - The original key, _K_, is used to derive two new keys, $K_1$ and $K_2$.
-- One is used in the basic algorithm, the other is XORed into the final message block. Pad if neccessary.
+- One is used in the basic algorithm, the other is XORed into the final message block. Pad if necessary.
 - The IV is set to all zeroes.
 - The MAC tag is the $T_{len}$ most significant bits of the output.
 

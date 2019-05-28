@@ -46,9 +46,9 @@ Note that iterated hash functions operate on each block sequentially using the s
 > Use a fixed-size compression function applied to multiple blocks of the message
 
 A compression function here is defined as a function that takes two _n_-bit input strings and
-produces a single _n_-bit output stirng.
+produces a single _n_-bit output string.
 
-The Merkle-Damgård constuction chains these together. An IV (similar to the ones used in block
+The Merkle-Damgård construction chains these together. An IV (similar to the ones used in block
 ciphers) and the first block of a message, $m_1$, is input to the compression function. The output
 is used as the input for the second compression, instead of the IV, in addition to the block, $m_2$.
 
@@ -74,7 +74,7 @@ The construction suffers from some weaknesses as well:\
 3. Collisions for multiple messages can be found without much more difficulty than collisions for 2
    messages.
 
-Still, the Merkle-Damgård constuction is used in standard and former standard hash functions (MD5,
+Still, the Merkle-Damgård construction is used in standard and former standard hash functions (MD5,
 SHA-1, SHA-2)
 
 ## Standardized hash functions
@@ -84,14 +84,14 @@ section only includes some basic key points.
 
 ### MDx family of hashes
 
-Old and insecure by todays standards. MD2, 4 and 5 have been used in practice, but are all easily
+Old and insecure by today's standards. MD2, 4 and 5 have been used in practice, but are all easily
 broken.
 
 Is based on the Merkle-Damgård construction. They all output 128 bits. Recall the section about
 the birthday paradox and how many bits were recommended.
 
 ### SHA-0 and SHA-1
-Based off of MDx hashes (which makes it a Merkle-Damgård constuction), but with added complexity and a bigger output size of 160 bits (weak).
+Based off of MDx hashes (which makes it a Merkle-Damgård construction), but with added complexity and a bigger output size of 160 bits (weak).
 Both are broken, but this is quite recent. First attack of SHA-1 was found in 2017.
 
 ### SHA-2 family

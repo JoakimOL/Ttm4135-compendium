@@ -6,7 +6,7 @@
 ## Random numbers
 Defining randomness is hard. We would like to get bitstrings that just as random as any other.
 
-Generators of random numbers are divded into categories:
+Generators of random numbers are divided into categories:
 
 - True random number generators (TRNG)
     - Physical processes which outputs each valid string independently with equal probability
@@ -15,39 +15,39 @@ Generators of random numbers are divded into categories:
 
 
 ## True random number generators
-NIST has provided a framework for esign and validation of TRNGs, called entropy sources. These
+NIST has provided a framework for design and validation of TRNGs, called entropy sources. These
 entropy sources includes a physical source of noise, a sampling process and post processing. The
 output is any requested number of bits. The standard specified by NIST also includes statistical
 tests for validating the entropy sources.
 
 ## Pseudo randon number generators
-NIST recommends specific PRNG algorithms named Deterministic random bit genrators (DRBG), based on hash
+NIST recommends specific PRNG algorithms named Deterministic random bit generators (DRBG), based on hash
 functions, HMAC and block ciphers in counter mode ( see lec 3 ). They often use a TRNG to seed the
 state.
 
 ## security of a DRBG
 The security is defined in terms of the ability of an attacker to distinguish between a PRNG and
-TRNG. This is measuree by two properties:
+TRNG. This is measured by two properties:
 
 1.  Backtracking resistance
     - An attacker who knows the current state of the DRBG cannot distinguish between earlier
       outputs.
     - If you see one output, you cannot make sense of, or guess, earlier outputs?
-2. forward prediction resistnace
-    - An attacker who kows the current state of the DRBG should not be able to distinguish between
+2. forward prediction resistance
+    - An attacker who knows the current state of the DRBG should not be able to distinguish between
       later states and the current.
 
 
 ## CTR_DRBG
 Uses a block cipher in CTR mode (see lec. 3), such as AES with 128bit keys.
 The DRBG is initialized with a seed which matches the length of the key and block summed.  This seed
-defines a key, _k_ , which is used in AES. No nonce and CTR value is used, like innormal CTR mode,
+defines a key, _k_ , which is used in AES. No nonce and CTR value is used, like in normal CTR mode,
 but rather uses the seed value.
 
 ### update function in CTR_DRBG
 Each request to the DRBG generates of up $2^{19}$ bits.
 State must be updated after each request, which is handled by the update function. (K,ctr) must be
-updated by generating twoblocks  using the old key to make a new one.
+updated by generating two blocks using the old key to make a new one.
 
 ## Stream ciphers
 > Stream ciphers are characterise by the generation of a keystream using a short key and an init
@@ -57,7 +57,7 @@ Each element of the stream is used successively to encrypt one or more plaintext
 
 Symmetric. Given the same key value, both sender and receiver can encrypt and decrypt the same.
 
-### Synchornous stream cipherrs
+### Synchronous stream ciphers
 Simplest kind of stream ciphers, as the keystream is generated independently of the plaintext. Both
 sender and receiver nee the same keystream, and synchronise their position in it. In a way, one can
 look at the vigenere cipher as a periodic synchronous stream cipher where each shift is defined by a
@@ -70,12 +70,12 @@ For each time interval, _t_, each of the following are defined:
 - a binary plaintext $p(t)$
 - a binary ciphertext $c(t)$
 
-encryption: $c(t) = p(t) \oplus s(t)$
+Encryption: $c(t) = p(t) \oplus s(t)$
 
-decryption: $p(t) = c(t) \oplus s(t)$
+Decryption: $p(t) = c(t) \oplus s(t)$
 
 
-## Shannons definition of perfect secrecy
+## Shannon's definition of perfect secrecy
 > to define perfect secrecy, consider a cipher with message set _M_ and ciphertext set _C_.
 > Then $PR(M_i|C_j)$ is the probability that the message $M_i$ was encrypted given that ciphertext
 > $C_i$ is observed.
@@ -90,10 +90,10 @@ Plaintext: HELLO
 
 Keystream: EZABD
 
-ciphertext: LDLMR
+Ciphertext: LDLMR
 
 
-Since the probability of each charcter in he keystream is equally plausible, the 5-letter ciphertext
+Since the probability of each character in he keystream is equally plausible, the 5-letter ciphertext
 can equally possibly be every 5-letter string.
 
 
@@ -104,13 +104,13 @@ actually getting completely random keys. Key generations, transportation, sync, 
 problematic since the keys are possibly very large.
 
 ## Visual cryptography
-> An appication of the one time pad is visual cryptography which  splits an image into two shares
+> An application of the one time pad is visual cryptography which  splits an image into two shares
 > Decryption works by overlaying the two shared images
 
 Works by splitting the pixel in a random way, just like splitting a bit in the one time pad. Each
-split doesnt reveal any info about the image, again alike the one time pad.
+split doesn't reveal any info about the image, again alike the one time pad.
 
-encrypting an image:
+Encrypting an image:
 
 - generate the one time pad, _P_, (random string of bits), with length equal to the number of pixels
   in the image
@@ -122,12 +122,12 @@ encrypting an image:
 
 
 
-To reveal the hidden images, the two shares are overlaye. Each black pixel is black in the overlay,
+To reveal the hidden images, the two shares are overlaid. Each black pixel is black in the overlay,
 each white pixel is half-white in the overlay.
 
 
 ## Conclusion
-TRNGS can be constructed from phsical devices and used as seeds.
+TRNGS can be constructed from physical devices and used as seeds.
 PRNGs can be constructed from other primitives like block ciphers.
 TRNGs can be use to make unbreakable encryption via one time pad.
 PRNGs can be use as practical synchronous stream ciphers

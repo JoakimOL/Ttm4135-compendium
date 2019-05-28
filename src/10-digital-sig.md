@@ -1,5 +1,5 @@
 # Digital signatures
-MACs provide data integrity and authentication (is the data tampered with? is the person you're
+MACs provide data integrity and authentication (is the data tampered with? Is the person you're
 interacting with who he/she claims?). Generating a MAC tag requires the message, as well as the key.
 Digital signature provides all the same properties, as well as a few additions. It is a technique
 that uses `public key` cryptography. Digital signatures provide non-repudiation, which is a legal
@@ -30,7 +30,7 @@ signature for any message.
 \end{algorithm}
 
 ### signature verification algorithm
-Anyone should  be able to use the signature verification key to verify a signature.
+Anyone should be able to use the signature verification key to verify a signature.
 
 \begin{algorithm}[H]
 \DontPrintSemicolon
@@ -64,7 +64,7 @@ RSA signatures rely on the difficulty of factorizing primes.
 
 The public verification key becomes (_e_,_n_), where _n_ = _pq_. The signing key is _d_. RSA
 signatures also require a hash function, _h_, which should be a fixed and publicly known parameter of the
-scheme. The choice hash function is important, as some allow you to prove your security. a full
+scheme. The choice hash function is important, as some allow you to prove your security. A full
 domain hash function (can output all values between 1 to _n_) or `PSS` are good choices.
 
 Signature generation takes the message  _m_, the modulus _n_ and the private exponent _d_ as input.
@@ -93,7 +93,7 @@ Signature verification:
 
 
 ## Digital signature algorithm (DSA)
-Based on the elgamal signature scheme, but with simpler calculations and shorter signatures. This is
+Based on the Elgamal signature scheme, but with simpler calculations and shorter signatures. This is
 due to restricting calculations to a smaller group or to an elliptic curve group.
 
 It is also designed to use with a SHA hash function. Avoids some attacks Elgamal signatures may be
@@ -116,7 +116,7 @@ reduced modulo _q_ before exponentation -- saving precious computation power.
 : valid combinations of L and N in DSA. Some NIST publication does not approve the first choice of
 parameters.
 
-keys:
+Keys:
 
 1. Private signing key, _x_, where $0 < x < q$.
 2. Public key, $y = g^x \mod p$, where _y_, _p_ and _g_ are public knowledge.

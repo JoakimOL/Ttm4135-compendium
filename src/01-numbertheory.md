@@ -8,7 +8,7 @@ inverses, groups and fields.
 $\mathbb{Z}$ denotes the set of integers\
 _a_ divides _b_ if there exists a _k_ in $\mathbb{Z}$ such that $a*k = b$ \
 $a*k = 3*2 = 6 = b$\
-An integer is prime if the only positive divisors are 1 and _p_
+An integer is prime if the only positive divisors are 1 and _p_\
 checking primality for a number _n_ can be done by trial division up to $sqrt(n)$.
 
 ## Basic properties of factors
@@ -16,8 +16,8 @@ checking primality for a number _n_ can be done by trial division up to $sqrt(n)
  1. if _a_ divides _b_ and _a_ divides _c_ then _a_ divides _b_+_c_
  2. if _p_ is a prime and _p_ divides _ab_, then _p_ divides _a_ or _b_
 
-example:\
-$6|18$ and $6|24$ $\rightarrow$ $6|42$ |
+Example:\
+$6|18$ and $6|24$ $\rightarrow$ $6|42$
 
 ## Division algorithm
 
@@ -51,7 +51,7 @@ Given $a \equiv b (\mod n)$ and $c \equiv d (\mod n)$ then\
 2. $ac \equiv bd (\mod n)$
 3. $ka \equiv kb (\mod n)$
 
-note:\
+Note:\
 This means we can always reduce the inputs modulo _n_ before performing additions or
 multiplications
 
@@ -85,7 +85,7 @@ In this course we will only consider commutative groups, which are also commutat
 
 ### Cyclic groups
  - The order of a group, G, often written |G|, is the number of elements in G
- - we write $g^k$  to denote repeated aplication of g using the group operation.
+ - we write $g^k$  to denote repeated application of g using the group operation.
     - the order of an element g, written |g|, is the smallest integer k with $g^k = 1$
 - a group element g is a generator for G if $|g| = |G|$
 - a group is cyclic if it has a generator
@@ -97,14 +97,14 @@ In this course we will only consider commutative groups, which are also commutat
 $ax \equiv 1 (\mod n)$
 and is written $a^{-1} mod n$
 
-in cryptosystems, we often need to find inverses so we can decrypt, or undo, certain operations
+In cryptosystems, we often need to find inverses so we can decrypt, or undo, certain operations
 
 > Theorem:
 > Let $0 < a < n$. Then _a_ has an inverse modulo n iff $gcd(a,n) = 1$. (a and n are co-prime)
 
 ## Modular inverses using Euclidean algorithm
 to find the inverse of _a_ we can use the Euclidean algorithm, which is very efficient.
-since gcd(a,n) = 1, we can find ax + ny   = 1 for integers x and y by Euclidean algorithm.
+Since gcd(a,n) = 1, we can find ax + ny   = 1 for integers x and y by Euclidean algorithm.
 
 ### An actual example of modular inverses.
 Since there are really bad resources for this:\
@@ -151,7 +151,7 @@ $8(8) + 21(-3) = 1 \mod 21$\
 
 $8(8) + 21(18) = 1 \mod 21$\
 
-we have 21(18), which is 18 times the modulus. Anything multiplied with the modulus is 0:\
+We have 21(18), which is 18 times the modulus. Anything multiplied with the modulus is 0:\
 
 $8(8) = 1 \mod 21$\
 
@@ -172,12 +172,12 @@ $5 = 2(2) + 1$\
 $5+2(-2) = 1$ (1)\
 $12+5(-2) = 2$ (2)\
 
-substituting (2) in (1)
+Substituting (2) in (1)
 
 $5 + (12 + 5(-2))(-2) = 1 \mod 12$\
 $5 + 12(-2) + 5(4) = 1 \mod 12$\
 $5(5) + 12(-2) = 1 \mod 12$\
-$5(5) + 12(10) = 1 \mod 12$ again, -2 doesnt exist in mod12. 12-2 = 10 works since 2 is smaller than
+$5(5) + 12(10) = 1 \mod 12$ again, -2 doesn't exist in mod 12. 12-2 = 10 works since 2 is smaller than
 10.
 $5(5) = 1 \mod 12$\
 
@@ -225,7 +225,7 @@ For example: (from exam 2018)\
 > a field is a set, F, with two binary operations
 $+$ and  $\cdot$, satisfying:
 
-1. F is commutative group uner the + operation, with identity element denoted 0
+1. F is commutative group under the + operation, with identity element denoted 0
 2. F \\ {0} is a commutative group under the dot operation
 3. distributive, $\forall (a,b,c) \in F$
 
@@ -234,16 +234,16 @@ For secure communications, we only care about fields with a finite number of ele
 a famous theorem says that
 > Finite fields exist of size p^n for any prime
 jesus christ hun dama går fort frem.
-see slides from lecture 2
+See slides from lecture 2
 
 - often written $Z_p$,instead of GF(p)
-- multiplication anda ddition are done modulo p
+- multiplication and a addition are done modulo p
 - Multiplicative group is exactly $Z_p^*$
 - used in digital signature schemes
 
 For finite fields of order $2^n$ can use polynomial arithmetic: \
 $00101101 = x^5 + x^3 + x^2 + 1$
 \
-the field is representeed by use of a primitive polynomial m(x).
-addition and multiplication is defined by polynomial addition and multiplication modulo m(x).
+the field is represented by use of a primitive polynomial m(x).
+Addition and multiplication is defined by polynomial addition and multiplication modulo m(x).
 Division is done efficiently by hardware using shifts.
