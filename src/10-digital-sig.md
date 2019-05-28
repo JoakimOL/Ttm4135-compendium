@@ -91,6 +91,8 @@ Signature verification:
 
 1. verify that $g^m \equiv y^r r^s (\mod p)$
 
+RSA signature generation is fast, which is why it sees much use.
+
 
 ## Digital signature algorithm (DSA)
 Based on the Elgamal signature scheme, but with simpler calculations and shorter signatures. This is
