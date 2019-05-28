@@ -213,4 +213,4 @@ The receiver receives the ciphertext, _C_, the nonce, _N_, the tag, _T_, and the
 _A_. This is all the receiver needs to recompute _T_ and check whether it matches the received _T_.
 If it does, the receiver can decrypt _C_ just like in CTR-mode.
 
-This is used in TLS.
+This is used in TLS 1.2.
