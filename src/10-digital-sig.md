@@ -155,4 +155,38 @@ bits).
 
 ECDSA have shorter public keys.
 
+# Certificates and PKI
+
+## Public key infrastructure (PKI)
+> A public key infrastructure is the key management environment for public key
+> information of a public key cryptographic system
+
+Key management includes generation of cryptographic keys as well as distribution,
+storage and destruction of these. Many entities spanning several disciplines may
+be involved, but our focus is technical.
+
+## Digital certificates
+Certificates (or certs, for short) are what binds a public key to its owner.
+Without a cert, you can't **REALLY** be certain that the person on the other
+side is who he or she claims. This is achieved by having each cert signed by 
+someone trusted by the certificate verifier, the certification authority (CA).
+
+CAs create, issue and revoke certs for subscribers to that CA and other CAs.
+CAs have a certification practice statement (CPS) covering several issues like
+legal and privacy issues and checks they perform before a cert is issued.
+
+The X.509 standard is the most widely used standard of digital certificates.
+Important fields included in this standard includes:
+
+- Version number
+- Serial number (set by CA)
+- signature algorithm identifier (which algorithm is used for signatures)
+- Issuer (name of CA)
+- Subject (name of receiver)
+- public key information
+- validity period
+- digital signature of the certificate (signed by CA)
+
+Certificates are verified by checking that the CA signature is valid and that
+any conditions set in the cert are correct. 
 
