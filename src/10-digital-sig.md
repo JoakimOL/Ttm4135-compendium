@@ -73,11 +73,84 @@ The signature _s_ is computed as $h(m)^d\mod n$.
 Signature verification takes the signature and the public key _e_ as input. If $s^e \mod n =
 h\prime$ the signature is legit.
 
-## Discrete logarithm signatures
+## Elgamal signature scheme in $\mathbb{Z}_p^*$
+Signature scheme based on the discrete logarithm problem. It consists of the following keys, given
+_p_, a large prime with generator _g_:
+
+1. Private signing key, _x_, where $0 < x < p-1$.
+2. Public key, $y = g^x \mod p$, where _y_, _p_ and _g_ are public knowledge.
+
+Signature generation:
+
+1. Select random _k_ such that $gcd(k,p-1) = 1$ and compute\
+$r = g^k \mod p$
+2. Solve equation $s = k^{-1}(m - xr) \mod (p-1)$
+3. return (m, r, s)
+
+Signature verification:
+
+1. verify that $g^m \equiv y^r r^s (\mod p)$
 
 
+## Digital signature algorithm (DSA)
+Based on the elgamal signature scheme, but with simpler calculations and shorter signatures. This is
+due to restricting calculations to a smaller group or to an elliptic curve group.
+
+It is also designed to use with a SHA hash function. Avoids some attacks Elgamal signatures may be
+vulnerable to.
+
+The prime, _p_, is chosen such that p - 1 has a prime divisor, _q_. The sizes of _p_ and _q_ are
+denoted _L_ and _P_, respectively. Note how the size of _q_ is much smaller than _p_. The generator, _g_,
+is replaced with the value $h^{\frac{p-1}{q}} \mod p$, where _h_ is a generator of $\mathbb{Z}_p^*$. This implies
+that _g_ has order _q_, which in turn means that all exponents in the algorithm can be
+reduced modulo _q_ before exponentation -- saving precious computation power.
 
 
+| L           | N            | to use with |
+| ----------- | ------------ | ----------- |
+| 1024 bits   | 160 bits     | SHA-1       |
+| 2048 bits   | 224 bits     | SHA-224     |
+| 2048 bits   | 256 bits     | SHA-256     |
+| 3072 bits   | 256 bits     | SHA-256     |
 
+: valid combinations of L and N in DSA. Some NIST publication does not approve the first choice of
+parameters.
+
+keys:
+
+1. Private signing key, _x_, where $0 < x < q$.
+2. Public key, $y = g^x \mod p$, where _y_, _p_ and _g_ are public knowledge.
+
+Signature generation:
+
+1. Select random _k_ such that $0 < k < q$ and compute\
+$r = g^k \mod q$
+2. Solve equation $s = k^{-1}(H(m) - xr) \mod (q)$, where _H_ is a SHA-family hash function that
+   outputs _N_ bits
+3. return (m, r, s)
+
+The returned signature is of size 2N bits.
+
+Signature verification:
+
+1. check that $0 <  r < q$ and $0 < s q$
+2. compute $w = s^{-1} \mod q$,\
+$u_1  = H(m)w \mod q$\
+$u_2  = rw \mod q$
+2. verify that $(g^{u_1}y^{-u_2} \mod p) \mod q = r$
+
+## Elliptic curve DSA (ECDSA)
+Elliptic curve parameters are chosen from a list of NIST approved curves.\
+Signature generation and verification is the same as in DSA with a few exceptions:
+
+1. _q_ becomes the order of the elliptic curve group.
+2. multiplication mod _p_ is replaced by the elliptic curve group operation $\cdot$.
+3. after each operation on a group element, only the x-coordinate is kept.
+
+Signatures generated from ECDSA is generally not shorter than DSA with the same security level.
+ECDSA signature sizes can vary form 326 to 1142 bits (while DSA signatures are often 448 or 512
+bits).
+
+ECDSA have shorter public keys.
 
 
