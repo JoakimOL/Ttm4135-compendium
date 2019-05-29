@@ -83,7 +83,40 @@ The handshake is split into four phases:
 - phase 4: finalize the setup of the secure connection.
 
 ### Phase 1 {#sec:TLS:handshake:phase1}
+Client and server negotiate TLS version, cipher suite and nonces to be used in compression and key exchange.
+This consists of two messages:
+
+First a client "hello" which states the highest version of TLS
+available as well as which ciphersuites are available. Also sends client nonce, $N_c$.
+
+Afterwards, the server responds with a "hello" that returns the servers' selection of version and
+ciphersuite from the list sent by the client. Also sends server nonce, $N_c$, to client.
+
+### Phase 2 {#sec:TLS:handshake:phase2}
+Server sends its certificate (obtained by a CA) to client, as well as its input to the key exchange
+algorithm (server key exchange). If the negotiated scheme includes client authorization, request the
+clients' certificate.
+
+### Phase 3 {#sec:TLS:handshake:phase3}
+> TODO
+
+### Phase 4 {#sec:TLS:handshake:phase4}
+> TODO
+
+### TLS Ciphersuites {#sec:TLS:handshake:ciphersuites}
 TLS ciphersuites specify which algorithms to use, both for key establishment as well as the later
 authenticated encryption and key generation. There are a literal fuck ton of suites to choose from,
 and many are bad. TLS 1.3 have removed a bunch, and requires all ciphersuites to be `AEAD`  (see
 @sec:authencryption:modes)
+
+An example of a ciphersuite is TLS_RSA_WITH_3DES_EDE_CBC_SHA. This unholy abomination means:
+
+- The key exchange will use RSA for encryption
+- 3DES in CBC mode will be used for encryption of secure communications
+- SHA-1 will be used in HMAC
+
+
+The first part denotes the handshake algorithm, the second part denotes (authenticated)encryption
+scheme and the third part denotes the means of achieving integrity (key deriving or hash function) ?
+
+
