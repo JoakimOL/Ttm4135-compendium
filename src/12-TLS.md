@@ -14,7 +14,7 @@ TLS consists of three higher level protocols:
 
 As well as the TLS record protocol which provides basic services to the higher level protocols.
 
-## Record protocol {#sec:record}
+## Record protocol {#sec:TLS:record}
 The record protocol aims to provide two services for TLS connections, that we have discussed earlier
 in the course:
 
@@ -40,7 +40,7 @@ compressed (compression removed in version 1.3, due to CRIME 2012 attack), and a
 
 The record protocol splits each application layer message in blocks of $2^{14}$ bytes or less.
 
-### Cryptographic algorithms in TLS {#sec:algorithms}
+### Cryptographic algorithms in TLS {#sec:TLS:record:algorithms}
 
 MAC:
 
@@ -61,7 +61,7 @@ Using authenticated encryption is also allowed from TLS 1.2, replacing the MAC a
 In TLS 1.3, the only allowed configuration is AES in CCM or GCM modes. Authenticated additional data
 is the header and implicit record sequence number.
 
-## Handshake protocol {#sec:handshake}
+## Handshake protocol {#sec:TLS:handshake}
 All above mentioned "agreed-upon" algorithms, as well as which version of TLS to use, is decided in
 the handshake. The handshake also establishes a shared session key to use in the record protocol,
 authenticates the server and finally completes session establishment. Some times it also
@@ -82,7 +82,7 @@ The handshake is split into four phases:
 - phases 2 and 2: Key exchange. How this is done depends on the outcome of phase 1.
 - phase 4: finalize the setup of the secure connection.
 
-### TLS Ciphersuites {#sec:tlsciphersuites}
+### Phase 1 {#sec:TLS:handshake:phase1}
 TLS ciphersuites specify which algorithms to use, both for key establishment as well as the later
 authenticated encryption and key generation. There are a literal fuck ton of suites to choose from,
 and many are bad. TLS 1.3 have removed a bunch, and requires all ciphersuites to be `AEAD`  (see
