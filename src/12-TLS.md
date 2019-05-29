@@ -97,11 +97,14 @@ Server sends its certificate (obtained by a CA) to client, as well as its input 
 algorithm (server key exchange). If the negotiated scheme includes client authorization, request the
 clients' certificate.
 
-> TODO
 ### Phase 3 - Client {#sec:TLS:handshake:phase3}
+Client reponds by sending its input to the key exchange algorithm (client key exchange). If
+requested by the server, also send own certificate. Verify server's cert with CAs public key. This
+public key is assumed to be available, as its often shipped with your web browser etc.
 
-> TODO
 ### Phase 4 - start of communications, summary of handshake {#sec:TLS:handshake:phase4}
+Finalizing the handshake, both the server and client switches to the ciphersuite negotiated earlier.
+Both also sends a checksum of the previous messages so both can verify it is correct.
 
 ### TLS Ciphersuites {#sec:TLS:handshake:ciphersuites}
 TLS ciphersuites specify which algorithms to use, both for key establishment as well as the later
@@ -119,4 +122,42 @@ An example of a ciphersuite is TLS_RSA_WITH_3DES_EDE_CBC_SHA. This unholy abomin
 The first part denotes the handshake algorithm, the second part denotes (authenticated)encryption
 scheme and the third part denotes the means of achieving integrity (key deriving or hash function) ?
 
+## Ephemeral Diffie-Hellmann handshake
+This is one of several variants of the TLS handshake protocol.
 
+The server key exchange sends the generator, group parameters and the server ephemeral value
+to be used in Diffie-Hellmann. All of these values are signed by the server.
+
+The client key exchange sends the client ephemeral Diffie Hellmann value, which  might be signed
+depending on whether client certification is used or not.
+
+Pre-master secret, _pms_, is the shared Diffie-Hellmann secret.
+
+
+## RSA handshake
+The server key exchange is not a thing in RSA handshake.
+
+The client key exchange sends the pre-master secret, _pms_, by selecting a random value for it
+and encrypting it with the server's public key. The server then retrieves _pms_ by decrypting it
+using its own private key.
+
+## Other variants
+(Static) Diffie-Hellmann can be used with certified keys. Should the client not have a cert (which
+often is the case browsing the internet), then the client uses an ephemeral Diffie-Hellmann key.
+
+Another variant is the anonymous Diffie-Hellmann. Here the ephemeral keys are not signed, which
+means they are only protected against passive eavesdropping.
+
+## Generating session keys
+To generate session keys, a master secret, _ms_, is needed. This is defined using the pre-master
+secret, _pms_, as:\
+$ms = PRF(pms, \text{"master secret"}, N_c || N_s)$\
+
+All "keying material", _k_, are generated from _ms_ by using:\
+$k = PRF(ms, \text{"key expansion"}, N_s || N_c)$
+
+Session keys are partitioned from _k_ in each direction (write key || read key). Depending on
+ciphersuite the keying material, _k_, can be an encryption key, a MAC key, an IV etc.
+
+The function `PRF` (pseudorandom function) used above is built from HMAC with a specified hash
+function. Older TLS versions (1.0, 1.1) used MD5 and SHA-1, but newer (1.2+) uses SHA-2.
