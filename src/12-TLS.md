@@ -90,7 +90,7 @@ First a client "hello" which states the highest version of TLS
 available as well as which ciphersuites are available. Also sends client nonce, $N_c$.
 
 Afterwards, the server responds with a "hello" that returns the servers' selection of version and
-ciphersuite from the list sent by the client. Also sends server nonce, $N_c$, to client.
+ciphersuite from the list sent by the client. Also sends server nonce, $N_s$, to client.
 
 ### Phase 2 - Server {#sec:TLS:handshake:phase2}
 Server sends its certificate (obtained by a CA) to client, as well as its input to the key exchange
