@@ -82,7 +82,7 @@ The handshake is split into four phases:
 - phases 2 and 2: Key exchange. How this is done depends on the outcome of phase 1.
 - phase 4: finalize the setup of the secure connection.
 
-### Phase 1 {#sec:TLS:handshake:phase1}
+### Phase 1 - "hello" {#sec:TLS:handshake:phase1}
 Client and server negotiate TLS version, cipher suite and nonces to be used in compression and key exchange.
 This consists of two messages:
 
@@ -92,16 +92,16 @@ available as well as which ciphersuites are available. Also sends client nonce, 
 Afterwards, the server responds with a "hello" that returns the servers' selection of version and
 ciphersuite from the list sent by the client. Also sends server nonce, $N_c$, to client.
 
-### Phase 2 {#sec:TLS:handshake:phase2}
+### Phase 2 - Server {#sec:TLS:handshake:phase2}
 Server sends its certificate (obtained by a CA) to client, as well as its input to the key exchange
 algorithm (server key exchange). If the negotiated scheme includes client authorization, request the
 clients' certificate.
 
-### Phase 3 {#sec:TLS:handshake:phase3}
 > TODO
+### Phase 3 - Client {#sec:TLS:handshake:phase3}
 
-### Phase 4 {#sec:TLS:handshake:phase4}
 > TODO
+### Phase 4 - start of communications, summary of handshake {#sec:TLS:handshake:phase4}
 
 ### TLS Ciphersuites {#sec:TLS:handshake:ciphersuites}
 TLS ciphersuites specify which algorithms to use, both for key establishment as well as the later
