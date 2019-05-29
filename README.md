@@ -2,12 +2,13 @@
 
 make sure to have installed:
 
-- [`pandoc`](https://github.com/jgm/pandoc/blob/master/INSTALL.md) 
-- [eisvogel template](https://github.com/Wandmalfarbe/pandoc-latex-template).
+- [`pandoc`](https://github.com/jgm/pandoc/blob/master/INSTALL.md)
+- [`pandoc-crossref`](https://github.com/lierdakil/pandoc-crossref)
+- [eisvogel template](https://github.com/Wandmalfarbe/pandoc-latex-template)
 
 Additional tex packages might be needed depending on your system. Arch based system users may find all necessary packages in `aur`
 
-- texlive-core 
+- texlive-core
 - texlive-fontsextra
 - texlive-latexextra
 - texlive-science
