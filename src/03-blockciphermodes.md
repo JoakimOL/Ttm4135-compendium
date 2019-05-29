@@ -1,4 +1,4 @@
-# Block ciphers
+# Block ciphers {#sec:blockciphers}
 
 > Block ciphers are the main bulk encryption algorithms used in commercial applications.
 
@@ -7,7 +7,7 @@ encrypted/decrypted using the same key. A block is of a fixed size, often betwee
 Block ciphers are used in certain ways, called `modes of operations`. Each mode has different
 properties that make them desirable/undesirable in certain applications.
 
-## Notation
+## Notation{#sec:blockciphers:notation}
 
  - the message is n blocks in length
  - P Plaintext
@@ -19,7 +19,7 @@ properties that make them desirable/undesirable in certain applications.
  - $P_i$ plaintext block i
  - $C_i$ ciphertext block i
 
-## Criteria for block cipher design
+## Criteria for block cipher design{#sec:blockciphers:criteria}
 
 Claude Shannon discussed two important properties of encryption:
 
@@ -50,7 +50,7 @@ diffusion.
 Try encrypting the same text using a simple substitution cipher and then change one letter in the plaintext. Observe small changes in ciphertext. Next, try doing the same using a more sophisticated encryption scheme like AES with an online tool. Observe a huge difference after altering the plaintext.
 
 
-## Product cipher
+## Product cipher{#sec:blockciphers:product}
 
 > A product cipher is a cryptosystem in which the encryption function is formed by composing several
 > sub-encryption functions
@@ -59,14 +59,14 @@ Most block ciphers compose simple functions, each with different keys.
 
 $C = E(P,K) = f_r (...  (f_2(f_1(P,K_1),K_2)...), K_r)$
 
-## Iterated cipher
+## Iterated cipher{#sec:blockciphers:iterated}
 A special class of product ciphers are called iterated ciphers.
 The encryption process in an iterated cipher is divided into $r$ similar `rounds`, and the
 sub-encryption functions are all the same function, _g_, called the `round function`.
 Each key, $K_i$, is derived from the `master key`, _K_. Each key $K_i$ are called `round keys` or
 `subkeys` and are derived using a process called the `key schedule`.
 
-### Encryption in iterated ciphers
+### Encryption in iterated ciphers{#sec:blockciphers:iterated:encryption}
 $W_0 = P$\
 $W_1 = g(W_0, K_1)$\
 $W_2 = g(W_1, K_2)$\
@@ -74,12 +74,12 @@ $... ... ...$\
 $W_r = g(W_{r-1}, K_r)$\
 $C = W_r$\
 
-### Decryption in iterated ciphers
+### Decryption in iterated ciphers{#sec:blockciphers:iterated:decryption}
 in order to decrypt the messages, an inverse of the round function, $g^{-1}$, must be available.
 The inverse must satisfy
 $g^{-1}(g(W,K_i),K_i) = W$, $\forall K_i, W$
 
-## Feistel ciphers
+## Feistel ciphers{#sec:blockciphers:feistel}
 Feistel ciphers are iterated ciphers where the round function swaps two halves of the block and
 forms a new half on the right side.
 
@@ -92,7 +92,7 @@ $R_i = L_{i-1} \oplus f(R_{i-1},K_i)$\
 Where _f_ is any function, note that choice of _f_ affects security
 3. Ciphertext is $C=W_r = (L_r,R_r)$.
 
-## Substitution-permutation network
+## Substitution-permutation network{#sec:blockciphers:spn}
 Substitution-permutation networks (SPNs) are iterated ciphers. They require the block length, _n_ to
 allow each block to be split into _m_ sub-blocks of length _l_, so that $n = lm$ (The block length
 must allow you to split it into _m_ equally long sub-blocks). SPNs define two
@@ -112,10 +112,10 @@ During the round function _g_ of an SPN, there are three steps:
 2. Each sub-block is substituted by using substitution ($pi_s$)
 3. The whole block $W_i$ is permuted using permutation ($pi_p$)
 
-## DES
+## DES{#sec:blockciphers:DES}
 > TODO
 
-## AES
+## AES{#sec:blockciphers:AES}
 Data blocks are always 128 bits, while the key length (and number of rounds) may vary. Supports 128,
 192 and 256bit master key lengths, each requiring 10, 12 or 14 rounds respectively.  This makes it a substitution-permutation network with _n_ = 128 and _l_ = 8.
 The structure of the AES cipher is a byte-based substitution-permutation network consisting of:
@@ -138,42 +138,41 @@ AES represents each block as a 4x4 matrix of bytes (128 bits = 16 bytes, which i
 4. AddRoundKey
     - For every column, XOR with corresponding column of round key $K_i$
 
-### Key schedule
+### Key schedule {#sec:blockciphers:AES:key}
 The keys are also represented as a 4x4 matrix, similar to the blocks. This requires a 128bit subkey
 to be used in every round. These subkeys are derived from the master key. You'll need (number of
 rounds + 1) subkeys in total (since you need an initial subkey for the initial round).
 
-### Security in AES
+### Security in AES{#sec:blockciphers:AES:security}
 No severely dangerous attacks are known yet. If you reduce the number of rounds, security decreases.
 If an attacker gets hold of cipher text encrypted with a key that has a special relation to the
 master key, a related key attack is possible. What is a related key attack? This course doesn't
 know.
 
 
-# Block cipher modes of operation
+# Block cipher modes of operation{#sec:blockciphermodes}
 
-## Motivation
 Block ciphers encrypt blocks, but many of them are encrypted sequentially. This is generally
 insecure. Using different standardised _modes of operation_ with different levels of security and
 efficiency. This can also be used for authentication and integrity.
 
-### Randomized encryption
+## Randomized encryption{#sec:blockciphermodes:randomized}
 We can see patterns if the schemes aren't random. Typically this is achieved using an initialization
 vector IV, which may need to be either random or unique. One can also use a state variable that
 changes.
 
-### Efficiency
+## Efficiency{#sec:blockciphermodes:efficiency}
 There are several features of the modes that affect its efficiency. These do not affect security,
 but we would like to encrypt our data before the millennia is over. Features like possibility of
 parallel processing etc.
 
-### Padding
+## Padding{#sec:blockciphermodes:padding}
 some modes require the plantext to consist of only whole blocks. If the plaintext is not a length
 that is divisible by block length you will need to pad the plaintext to get the desired length.
 
-## Confidentiality modes
+## Confidentiality modes{#sec:blockciphermodes:confidentiality}
 
-### Electronic Codebook mode (ECB)
+### Electronic Codebook mode (ECB){#sec:blockciphermodes:confidentiality:ecb}
 This is dumb because you just take each block, and apply E or D to it using the same key every
 time.
 
@@ -183,7 +182,7 @@ time.
 - Errors propagate within blocks.
 - No initialization vector IV.
 
-### Cipher block chaining mode (CBC)
+### Cipher block chaining mode (CBC){#sec:blockciphermodes:confidentiality:cbc}
 CBC "chains" the blocks together.
 
 Encryption: $C_t = E(P_t \oplus C_{t-1},k) where C_0 = IV$
@@ -196,7 +195,7 @@ Decryption: $C_t = D(C_t, k) \oplus  C_t-1, where C_0 = IV$
 - We can do parallel decryption, no encryption.
 - IV must be random
 
-### Counter mode (CTR)
+### Counter mode (CTR){#sec:blockciphermodes:confidentiality:ctr}
 
 A counter and nonce is used. They are initialized by a randomly chosen value N. T_t is the
 concatenation between the nonce and block number t, N||t.
@@ -218,13 +217,13 @@ A one bit change in the ciphertext produces a one bit error in the plaintext at 
 
 Good for accessing specific plaintext blocks without decrypting the whole stream.
 
-## Message integrity
+## Message integrity{#sec:blockciphermodes:integrity}
 How to ensure that the message is not altered in the transmission? We treat message integrity and
 message authentication as the same thing. This includes preventing an adversary from fucking with
 your blocks. Message integrity can be provided whether or not encryption is used for
 confidentiality.
 
-### Message Authentication Code (MAC)
+### Message Authentication Code (MAC){#sec:blockciphermodes:integrity:mac}
 
 A mechanism for ensuring message integrity.
 On input secret key, _K_ , and an arbitrary length message _M_, a MAC algorithm outputs a short
@@ -251,7 +250,7 @@ function and get the corresponding tag out. (chosen plaintext attacks)
 
 It is not feasible for an attacker to produce a valid forgery.
 
-### Basic CBC-MAC (CMAC)
+### Basic CBC-MAC (CMAC){#sec:blockciphermodes:integrity:cmac}
 we've only discussed the properties of a MAC, not how the tag is created. CMAC is one way of
 creating a tag, using a block cipher. This is unforgeable as long as the message length is fixed.
 
@@ -272,9 +271,9 @@ Let _M_ be the message consisting of _n_ blocks. To compute CBC-MAC(_M_,_k_), do
 \end{algorithm}
 
 Note that unlike the CBC-mode, the IV has to be fixed and public. A random IV is not secure in
-this application. _E_ is defined as the encryption for CBC-mode, see CBC-section.
+this application. _E_ is defined as the encryption for CBC-mode, see @sec:blockciphermodes:confidentiality:cbc.
 
-### standardized CBC-MAC
+### standardized CBC-MAC{#sec:blockciphermodes:integrity:stanardcmac}
 A secure version of CMAC is standardized with some changes from the basic version:
 
 - The original key, _K_, is used to derive two new keys, $K_1$ and $K_2$.

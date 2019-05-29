@@ -1,6 +1,6 @@
-# RSA
+# RSA{#sec:RSA}
 
-## Keys
+## Keys{#sec:RSA:keys}
 
 Keys consist of several numbers. You need two random, distinct primes, _p_ and _q_, the product of these
 called the modulus, _n_, a public exponent, _e_ and a private exponent, _d_. \
@@ -26,7 +26,7 @@ $e = d^{-1}mod(\phi(n))$.
 
 Might be useful for an exam.
 
-## Encryption
+## Encryption{#sec:RSA:encryption}
 
 The input of the encryption is called _M_, which is a value that is less than _n_.\
 $0 < M < n$\
@@ -35,7 +35,7 @@ as well as adding randomness.
 
 The ciphertext, _C_, is computed as $E(M,K_E) = M^e \mod n$
 
-## Decryption
+## Decryption{#sec:RSA:decryption}
 
 The plaintext is retrieved by computing $D(C, K_D) = C^d \mod n = M$.\
 RSA decryption can be done more efficiently by utilizing the chinese remainder theorem. Good luck to
@@ -62,13 +62,13 @@ $M = C^d \mod(n) = C^{1949}\mod(2537) = 50$.
 Note how only publicly known values are used in encryption, while decryption uses the private
 exponent.
 
-## preprocessing/padding messages
+## preprocessing/padding messages {#sec:RSA:pad}
 Just encoding each letter to a number offers weak security. This can be observed to create an attack
 dictionary, or even for a `known plaintext attack`. `Håstads attack` is also a thing, which is described later.
 To prevent this, we preprocess the messages by padding to prepare the messages for encryption.
 These mechanisms must include redundancy and randomness.
 
-### PKCS number 1
+### PKCS number 1{#sec:RSA:pad:PKCS}
 
 |    |    |     |    |   |
 |----|----|-----|----|---|
@@ -83,7 +83,7 @@ These mechanisms must include redundancy and randomness.
 
 Using this scheme ensure that even short messages result in a big number for encryption.
 
-### Optimal Asymmetric Encryption Padding (OAEP)
+### Optimal Asymmetric Encryption Padding (OAEP) {#sec:RSA:pad:OAEP}
 OAEP is an encoding scheme that is a feistel network. It includes $k_0$ bits of randomness and $k_1$
 bits of redundancy. It also features the use of two hash functions in the network. This means that
 small changes in any bit going into the hash functions drastically alters the output. Because of
@@ -100,7 +100,7 @@ Key points:
 4. provides security against chosen ciphertext attacks  (and possibly chosen plaintext, not 100%
    sure)
 
-## Attacks against RSA
+## Attacks against RSA{#sec:RSA:attacks}
 A properly set up RSA scheme has pretty good security. Many proposed attacks on RSA are avoided by
 using standardised padding schemes.
 

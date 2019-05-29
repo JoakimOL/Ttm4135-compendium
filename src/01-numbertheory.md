@@ -11,7 +11,7 @@ $a*k = 3*2 = 6 = b$\
 An integer is prime if the only positive divisors are 1 and _p_\
 checking primality for a number _n_ can be done by trial division up to $sqrt(n)$.
 
-## Basic properties of factors
+### Basic properties of factors
 
  1. if _a_ divides _b_ and _a_ divides _c_ then _a_ divides _b_+_c_
  2. if _p_ is a prime and _p_ divides _ab_, then _p_ divides _a_ or _b_
@@ -19,7 +19,7 @@ checking primality for a number _n_ can be done by trial division up to $sqrt(n)
 Example:\
 $6|18$ and $6|24$ $\rightarrow$ $6|42$
 
-## Division algorithm
+### Division algorithm
 
 > for a and b in Z, a > b, there exists q and r in Z such that
 > $a  = bq + r$
@@ -221,7 +221,7 @@ For example: (from exam 2018)\
 - $g^{\frac{6}{2}} \neq 1$
 - This means that $g = 4$ is not a generator for $\mathbb{Z}_7^*$
 
-#  Fields
+##  Fields
 > a field is a set, F, with two binary operations
 $+$ and  $\cdot$, satisfying:
 
@@ -229,7 +229,7 @@ $+$ and  $\cdot$, satisfying:
 2. F \\ {0} is a commutative group under the dot operation
 3. distributive, $\forall (a,b,c) \in F$
 
-## Finite fields GF(p)
+### Finite fields GF(p)
 For secure communications, we only care about fields with a finite number of elements. \
 a famous theorem says that
 > Finite fields exist of size p^n for any prime

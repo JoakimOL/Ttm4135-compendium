@@ -1,4 +1,4 @@
-# Diffie Hellmann key exchange
+# Diffie Hellmann key exchange {#sec:diffiehellmann}
 
 ## Motivation
 
@@ -11,7 +11,7 @@ Public knowledge includes:
 - Large prime, _p_
 - generator g of $\mathbb{Z}_p^*$
 
-## Basic protocol
+## Basic protocol {#sec:diffiehellmann:protocol}
 
 Alice chooses an _a_ $\in \mathbb{Z}_p^*$ , sends $K_a = g^a \mod p$ to Bob.
 Next, Bob chooses a _b_ $\in \mathbb{Z}_p^*$ and sends $K_b = g^b \mod p$ to Alice.
@@ -20,7 +20,7 @@ Now both have knowledge of a $Z = (g^b)^a \mod p$. _Z_ can be used to compute a 
 crypto schemes. It is secure, as the only numbers that are being broadcast are $g^a \mod p$ and
 $g^b \mod p$. To find A and B from this you'd need to factorise the numbers which is hard.
 
-## Authenticated diffie hellmann
+## Authenticated diffie hellmann{#sec:diffiehellmann:authenticatedDH}
 It is rather easy to set up a man in the middle attack for this scheme. Just have the adversary set
 up keys with both Alice and Bob, and just relay the messages using these keys. Alice and Bob
 shouldn't be any wiser.
@@ -34,13 +34,13 @@ the middle, which can read everything thanks to the keys.
 
 This is fixed by adding digital signatures.
 
-## static and ephemeral diffie-hellmann
+## static and ephemeral diffie-hellmann{#sec:diffiehellmann:staticephemeral}
 The protocol described above uses _ephemeral keys_: Keys which are used once and then discarded. In
 a static diffie-hellmann scheme you'd let each party choose a long-term private key $X_a$ with
 corresponding key $Y_a = g^{xA} \mod p$. If each party has a long term key, they can simply look up
 each others keys and possibly skip the initial handshake.
 
-# Elgamal cryptosystem
+# Elgamal cryptosystem{#sec:elgamal}
 > Turning the diffie-hellmann protocol into a cryptosystem since 1985
 
 Based on one party having ephemeral keys, while the other has a long-term key. The long-term key
@@ -68,7 +68,7 @@ The private key for encryption is $K_D = x$ with $y = g^x \mod p$
 2. $D(C_1,K_D) = C2 \cdot (C_1^x)^{-1} \mod p = M$
 
 
-## Why does it work?
+## Why does it work?{#sec:elgamal:why}
 The sender knows the ephemeral private key _k_.
 The receiver knows the static private key _x_.
 Both sender and recipient can compute the diffie-hellmann value for the two public keys $C_1 = g^k
@@ -76,12 +76,12 @@ Both sender and recipient can compute the diffie-hellmann value for the two publ
 _m_ that pushes the value to another value in that group.
 
 
-## Security of Elgamal
+## Security of Elgamal{#sec:elgamal:security}
 The whole system is based on the difficulty of the discrete logarithm problem. If you can solve this
 problem and find x from $g^x \mod p$, the system is broken.
 Does not need padding, and does not require unique keys for every user.
 
-# Elliptic curves
+# Elliptic curves{#sec:EC}
 > Elliptic curves are algebraic structures formed from cubic equations.
 > But hey, we won't be using elliptic curves in the reals.
 -Cris Carr

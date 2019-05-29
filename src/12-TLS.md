@@ -1,4 +1,4 @@
-# TLS
+# TLS {#sec:TLS}
 Is one of the most widely used security protocol of today.
 
 It is the successor of SSL, which is now advised against, and is still being developed - the newest
@@ -14,7 +14,7 @@ TLS consists of three higher level protocols:
 
 As well as the TLS record protocol which provides basic services to the higher level protocols.
 
-## Record protocol
+## Record protocol {#sec:record}
 The record protocol aims to provide two services for TLS connections, that we have discussed earlier
 in the course:
 
@@ -24,7 +24,7 @@ in the course:
     - detect tampering with messages
 
 These services are provided by a symmetric encryption scheme and a MAC. Later TLS-versions (1.2+)
-also offer these services by using authenticated encryption modes (CCM and GCM, see own section).
+also offer these services by using authenticated encryption modes (CCM and GCM, see @sec:authencryption:modes).
 Necessary keys are set up by the handshake protocol.
 
 The record protocol format contains a header describing the type and length of the content, as well
@@ -40,7 +40,7 @@ compressed (compression removed in version 1.3, due to CRIME 2012 attack), and a
 
 The record protocol splits each application layer message in blocks of $2^{14}$ bytes or less.
 
-### Cryptographic algorithms in TLS
+### Cryptographic algorithms in TLS {#sec:algorithms}
 
 MAC:
 

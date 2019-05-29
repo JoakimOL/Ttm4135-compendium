@@ -1,4 +1,4 @@
-# Hash functions
+# Hash functions {#sec:hash}
 
 > A hash function, _H_, is a public function such that:\
 > _H_ is simple and fast to compute\
@@ -17,7 +17,7 @@ Good hash functions show some properties:
     - Given a hash, it should be infeasible to find an input that produce the same hash.
     - You cannot find the input, given the output.
 
-## The birthday paradox
+## The birthday paradox{#sec:hash:birthday}
 
 If we choose $\sqrt{M}$ values from a set of size _M_, the probability of getting two identical values (or in
 this context: hash collision) is about 50%. This is particularly useful in this course to compute
@@ -32,7 +32,7 @@ Today (the date the slides were made) $2^{128}$ attempts is considered infeasibl
 functions should output at least $2^{\frac{k}{2}} = 2^{128} \rightarrow k = 128*2 = 256$ bits in
 order to be considered collision resistant.
 
-## Iterated hash functions
+## Iterated hash functions{#sec:hash:iterated}
 
 Just like block ciphers, hash functions also need to be able to handle inputs of all sizes and
 shapes to produce a fixed size output. Iterated hash functions solve this challenge like the
@@ -41,7 +41,7 @@ function.
 
 Note that iterated hash functions operate on each block sequentially using the same function.
 
-## Merkle-Damgård construction
+## Merkle-Damgård construction{#sec:hash:merkle}
 
 > Use a fixed-size compression function applied to multiple blocks of the message
 
@@ -62,7 +62,7 @@ Merkle-Damgård construction:\
 $H(m) = h(PADDING, h_l)$\
 $h_l = h(m_l, h_{l-1})$ where $h_0 = IV$\
 
-### Properties of Merkle-Damgård construction
+### Properties of Merkle-Damgård construction{#sec:hash:merkle:properties}
 
 If the compression function, _h_, is collision-resistant, then the hash function, _H_, is
 collision-resistant.
@@ -77,24 +77,24 @@ The construction suffers from some weaknesses as well:\
 Still, the Merkle-Damgård construction is used in standard and former standard hash functions (MD5,
 SHA-1, SHA-2)
 
-## Standardized hash functions
+## Standardized hash functions{#sec:hash:standards}
 
 Slides lack many implementational details, so I'm guessing its not important for the course. This
 section only includes some basic key points.
 
-### MDx family of hashes
+### MDx family of hashes{#sec:hash:standards:mdx}
 
 Old and insecure by today's standards. MD2, 4 and 5 have been used in practice, but are all easily
 broken.
 
-Is based on the Merkle-Damgård construction. They all output 128 bits. Recall the section about
-the birthday paradox and how many bits were recommended.
+Is based on the Merkle-Damgård construction. They all output 128 bits. Recall the birthday paradox
+and how many bits were recommended (@sec:hash:birthday).
 
-### SHA-0 and SHA-1
+### SHA-0 and SHA-1{#sec:hash:standards:sha}
 Based off of MDx hashes (which makes it a Merkle-Damgård construction), but with added complexity and a bigger output size of 160 bits (weak).
 Both are broken, but this is quite recent. First attack of SHA-1 was found in 2017.
 
-### SHA-2 family
+### SHA-2 family{#sec:hash:standards:sha2}
 Several versions of SHA-2 exist, hence the term "family of SHA-2 hashes". They are developed in
 response to attacks on MD5 and SHA-1. Still a Merkle-Damgård construction.
 
@@ -120,14 +120,14 @@ Since the padding requires at least 1 bit of pad and either 64 or 128 bits of en
 sometimes results in adding a new block.
 
 
-### SHA-3
+### SHA-3{#sec:hash:standards:sha3}
 The MDx and previous SHA hashes were based on the same design, which has encountered unexpected
 attacks. The SHA-3 hash is the result of a competition (just like AES), held in 2007-2008. This
 ended up with a new function that was standardized in 2015 and is NOT based on the Merkle-Damgård
 construction. It uses a sponge construction, whatever that is.
 
 
-## HMAC
+## HMAC{#sec:hash:hmac}
 A MAC constructed from any iterated cryptographic hash function (like SHA256 etc).
 HMAC is defined as: $HMAC(M,K) = H( (K \oplus opad) || H (( K \oplus ipad ) || M ) )$\
 
@@ -143,9 +143,9 @@ to such attacks).
 HMAC is often used as a pseudorandom function for deriving keys (since they are deterministic but
 seem random)
 
-# Authenticated encryption
+# Authenticated encryption {#sec:authencryption}
 
-## Combining encryption and MAC
+## Combining encryption and MAC{#sec:authencryption:combining}
 
 How do you ensure both confidentiality (no one can read your messages) and integrity (you know the
 message is from a legitimate sender)? A proposed solution is to split your assumed established shared
@@ -175,7 +175,7 @@ the plaintext?)
 
 Some schemes do, however, provide both confidentiality and integrity with one key.
 
-## Modes for Authenticated encryption
+## Modes for Authenticated encryption {#sec:authencryption:modes}
 There are two types of input data:
 
 - Payload data: both encrypted and authenticated
@@ -185,7 +185,7 @@ Both modes of operation use the CTR-mode to add confidentiality, but add integri
 ways. They also allow some data to be only authenticated, not encrypted, providing ``authenticated
 encryption with associated data`` (AEAD). This property is important in newer versions of TLS.
 
-### Counter with CBC-MAC mode (CCM)
+### Counter with CBC-MAC mode (CCM) {#sec:authencryption:modes:CCM}
 This mode offers confidentiality for the payload, and authentication for both payload and associated
 data.
 
@@ -202,7 +202,7 @@ Output $C = (P \oplus MSB_{plen}(S)) || (T \oplus MSB_{tlen}(S_0))$,\
     and   $MSB_{n}(S)$ returns the _n_ most significants bits from _S_.
 
 
-### Galois Counter mode (GCM)
+### Galois Counter mode (GCM){#sec:authencryption:modes:GCM}
 A problem with CCM is that the formatting of _N_,_A_ and _P_ requires the length of both _A_ and
 _P_. This prevents it from being used in a streaming application. GCM overcomes this limitation. It
 combines CTR mode on a block cipher, _E_ (AES is a good and common choice), with a hash function called

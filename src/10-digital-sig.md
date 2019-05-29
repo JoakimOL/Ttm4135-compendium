@@ -1,4 +1,4 @@
-# Digital signatures
+# Digital signatures {#sec:digitalsignaures}
 MACs provide data integrity and authentication (is the data tampered with? Is the person you're
 interacting with who he/she claims?). Generating a MAC tag requires the message, as well as the key.
 Digital signature provides all the same properties, as well as a few additions. It is a technique
@@ -6,7 +6,7 @@ that uses `public key` cryptography. Digital signatures provide non-repudiation,
 concept. That means you can say your key was lost to a hacker and whatever malicious actions that
 key was involved with was not your work.
 
-## Elements of a digital signature scheme
+## Elements of a digital signature scheme {#sec:digsig:elements}
 
 1. Key generation
     - Outputs two keys, `signature generation key`, $K_s$, and `signature verification key`, $K_v$.
@@ -16,7 +16,7 @@ key was involved with was not your work.
     - outputs a boolean, given a message, a verification key and a signature.
 
 
-### signature generation algorithm
+### signature generation algorithm{#sec:digsig:elements:gen}
 Only the owner of the signing key (signature generation key) should be able to generate a valid
 signature for any message.
 
@@ -29,7 +29,7 @@ signature for any message.
 \caption{Signature generation}
 \end{algorithm}
 
-### signature verification algorithm
+### signature verification algorithm{#sec:digsig:elements:verify}
 Anyone should be able to use the signature verification key to verify a signature.
 
 \begin{algorithm}[H]
@@ -45,7 +45,7 @@ The verifying function should always return true for matching signing/verificati
 It should be infeasible for anyone without $K_s$ to construct _m_ and _s_ such that the
 verification returns true.
 
-## Security goals
+## Security goals{#sec:digsig:securitygoals}
 digital signatures may be broken in different ways
 
 - Key recovery:
@@ -58,7 +58,7 @@ digital signatures may be broken in different ways
 Modern digital signatures are only considered secure if they can resist existential forgery under a
 `chosen plaintext attack`.
 
-## RSA signatures
+## RSA signatures{#sec:digsig:rsa}
 One way of generating digital signature keys is by using RSA. Just like in the encryption scheme,
 RSA signatures rely on the difficulty of factorizing primes.
 
@@ -73,7 +73,7 @@ The signature _s_ is computed as $h(m)^d\mod n$.
 Signature verification takes the signature and the public key _e_ as input. If $s^e \mod n =
 h\prime$ the signature is legit.
 
-## Elgamal signature scheme in $\mathbb{Z}_p^*$
+## Elgamal signature scheme in $\mathbb{Z}_p^*$ {#sec:digsig:elgamal}
 Signature scheme based on the discrete logarithm problem. It consists of the following keys, given
 _p_, a large prime with generator _g_:
 
@@ -94,7 +94,7 @@ Signature verification:
 RSA signature generation is fast, which is why it sees much use.
 
 
-## Digital signature algorithm (DSA)
+## Digital signature algorithm (DSA) {#sec:digsig:DSA}
 Based on the Elgamal signature scheme, but with simpler calculations and shorter signatures. This is
 due to restricting calculations to a smaller group or to an elliptic curve group.
 
@@ -141,7 +141,7 @@ $u_1  = H(m)w \mod q$\
 $u_2  = rw \mod q$
 2. verify that $(g^{u_1}y^{-u_2} \mod p) \mod q = r$
 
-## Elliptic curve DSA (ECDSA)
+## Elliptic curve DSA (ECDSA){#sec:digsig:ECDSA}
 Elliptic curve parameters are chosen from a list of NIST approved curves.\
 Signature generation and verification is the same as in DSA with a few exceptions:
 
@@ -155,7 +155,7 @@ bits).
 
 ECDSA have shorter public keys.
 
-# Certificates and PKI
+# Certificates and PKI {#sec:PKI}
 
 ## Public key infrastructure (PKI)
 > A public key infrastructure is the key management environment for public key
@@ -165,10 +165,10 @@ Key management includes generation of cryptographic keys as well as distribution
 storage and destruction of these. Many entities spanning several disciplines may
 be involved, but our focus is technical.
 
-## Digital certificates
+## Digital certificates {#sec:PKI:digcert}
 Certificates (or certs, for short) are what binds a public key to its owner.
 Without a cert, you can't **REALLY** be certain that the person on the other
-side is who he or she claims. This is achieved by having each cert signed by 
+side is who he or she claims. This is achieved by having each cert signed by
 someone trusted by the certificate verifier, the certification authority (CA).
 
 CAs create, issue and revoke certs for subscribers to that CA and other CAs.
@@ -188,5 +188,5 @@ Important fields included in this standard includes:
 - digital signature of the certificate (signed by CA)
 
 Certificates are verified by checking that the CA signature is valid and that
-any conditions set in the cert are correct. 
+any conditions set in the cert are correct.
 
