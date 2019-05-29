@@ -182,7 +182,8 @@ There are two types of input data:
 - Associated data: only authenticated
 
 Both modes of operation use the CTR-mode to add confidentiality, but add integrity in different
-ways.
+ways. They also allow some data to be only authenticated, not encrypted, providing ``authenticated
+encryption with associated data`` (AEAD). This property is important in newer versions of TLS.
 
 ### Counter with CBC-MAC mode (CCM)
 This mode offers confidentiality for the payload, and authentication for both payload and associated
