@@ -194,4 +194,61 @@ strategies against it.
 ### CRIME and BREACH
 These attacks target the fact that compression leaks information. CRIME targets optional compression
 in TLS and BREACH target compression in HTTP. Mitigated by not using compression, in fact TLS1.3
-removed the option to have compression
+removed the option to have compression.
+
+### POODLE
+A padding oracle is a way for an attacker to know if a message in a ciphertext was correctly
+padded. CBC mode encryption may act as a padding oracle due to its error propagation. This can be
+applied to attacks on TLS, and is mostly mitigated by having a uniform error response so the
+attacker doesn't know what kind of error occurred.
+
+POODLE (Padding Oracle on Downgraded Legacy Encryption) forces downgrade to SSL3.0 (which is
+deprecated) during the handshake by stating it as the highest available version and then does
+a padding oracle attack.
+
+### Heartbleed
+A bug that could be exploited, which is now fixed. Due to some missing boundary checks in the heartbeat
+messages that checks if the connection is still active, the server could leak memory that could contain
+session- and long-term keys.
+
+### Man-in-the-middle attacks
+These attacks reply on issuing a new certificate and installing a root certificate in the browser.
+The ad/bloatware/malware company superfish had a scandal in 2015, called the "lenovo incident". Some
+lenovo computers were pre-installed with superfish software that included an unsafe, universal
+certificate authority signed by itself which would allow superfish to put ads on encrypted websites.
+
+This backfired the hell out of this world and allowed everyone to eavesdrop and tamper with encrypted
+traffic from these computers.
+
+## TLS 1.3
+Some changes from TLS 1.2 to 1.3 has been already mentioned. For your viewing pleasure, a more
+readable and complete list is presented:
+
+Things removed:
+
+- Static RSA key exchange
+- Diffie-Hellmann  key exchange
+- session renegotiation
+- SSL negotiation
+- DSA
+- Compression
+- non-AEAD ciphersuites (@sec:authencryption:modes)
+- MD5 hash
+- SHA-224 hash
+- change cipher spec protocol
+- shittons of ciphersuites and encryption algorithms.
+    - TLS 1.2 supported 319 suites
+    - TLS 1.3 only allows 5
+- PRF
+    - TLS 1.3 introduced a new way of deriving keys called HKDF (HMAC-based Key Derivation Function)
+
+Things changed/added:
+
+- Handshake is cleaned up and more efficient
+- ONLY AEAD ciphersuites
+- added new cipher and mac algorithms
+- separate key agreement and authentication algorithms in ciphersuites
+- Encrypted messages in handshake
+- 0-RTT mode (fast handshake given a pre-shared key, no forward secrecy yet. This is unfortunate)
+- backwards compatibility (which adds *a lot* of complexity)
+
