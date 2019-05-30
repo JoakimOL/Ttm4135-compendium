@@ -179,4 +179,19 @@ RSA-based handshakes in TLS does not provide forward secrecy.
 
 Diffie-Hellmann handshakes and ciphersuites in TLS does provide forward secrecy.
 
+## Attacks on TLS
 
+TLS 1.3 is the newest and safest version of TLS, which aimed to remove unnecessary/unsafe things and boost
+performance while retaining backwards compatibility. Sadly, TLS 1.3 isn't universally supported yet
+so unsafe features are still used (like unsafe ciphers).
+
+### BEAST
+BEAST (Browser Exploit Against SSL/TLS) exploits non-standard use of IV in CBC mode (see @sec:blockciphermodes:confidentiality:cbc). This attack allows the attacker to retrieve the plaintext.
+
+No longer considered a threat, as TLS 1.1 only allows random IVs and browsers implement migitation
+strategies against it.
+
+### CRIME and BREACH
+These attacks target the fact that compression leaks information. CRIME targets optional compression
+in TLS and BREACH target compression in HTTP. Mitigated by not using compression, in fact TLS1.3
+removed the option to have compression
