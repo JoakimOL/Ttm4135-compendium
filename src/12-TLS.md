@@ -81,7 +81,7 @@ TLS 1.3 simplifies this process (whew!).
 The handshake is split into four phases:
 
 - phase 1: initiate the connection and establish security capabilities (determine algorithms, versions etc)
-- phases 2 and 2: Key exchange. How this is done depends on the outcome of phase 1.
+- phases 2 and 3: Key exchange. How this is done depends on the outcome of phase 1.
 - phase 4: finalize the setup of the secure connection.
 
 ### Phase 1 - "hello" {#sec:TLS:handshake:phase1}
@@ -124,7 +124,7 @@ An example of a ciphersuite is TLS_RSA_WITH_3DES_EDE_CBC_SHA. This unholy abomin
 The first part denotes the handshake algorithm, the second part denotes (authenticated)encryption
 scheme and the third part denotes the means of achieving integrity (key deriving or hash function) ?
 
-## Ephemeral Diffie-Hellmann handshake
+## Ephemeral Diffie-Hellmann handshake{#sec:TLS:EDH}
 This is one of several variants of the TLS handshake protocol.
 
 The server key exchange sends the generator, group parameters and the server ephemeral value
@@ -136,21 +136,21 @@ depending on whether client certification is used or not.
 Pre-master secret, _pms_, is the shared Diffie-Hellmann secret.
 
 
-## RSA handshake
+## RSA handshake{#sec:TLS:RSA}
 The server key exchange is not a thing in RSA handshake.
 
 The client key exchange sends the pre-master secret, _pms_, by selecting a random value for it
 and encrypting it with the server's public key. The server then retrieves _pms_ by decrypting it
 using its own private key.
 
-## Other variants
+## Other variants{#sec:TLS:other}
 (Static) Diffie-Hellmann can be used with certified keys. Should the client not have a cert (which
 often is the case browsing the internet), then the client uses an ephemeral Diffie-Hellmann key.
 
 Another variant is the anonymous Diffie-Hellmann. Here the ephemeral keys are not signed, which
 means they are only protected against passive eavesdropping.
 
-## Generating session keys
+## Generating session keys{#sec:TLS:sessionkeys}
 To generate session keys, a master secret, _ms_, is needed. This is defined using the pre-master
 secret, _pms_, as:\
 $ms = PRF(pms, \text{"master secret"}, N_c || N_s)$\
@@ -164,12 +164,12 @@ ciphersuite the keying material, _k_, can be an encryption key, a MAC key, an IV
 The function `PRF` (pseudorandom function) used above is built from HMAC with a specified hash
 function. Older TLS versions (1.0, 1.1) used MD5 and SHA-1, but newer (1.2+) uses SHA-2.
 
-## Alert protocol
+## Alert protocol{#sec:TLS:alert}
 The alert protocol is there to allow signals to be sent between peers. These signals are mostly used to inform the peer about the cause of a protocol failure. Some of these signals are used internally by the protocol and the application protocol does not have to cope with them, and others refer to the application protocol solely. An alert signal includes a level indication which may be either fatal, close_notify or warning (under TLS1.3 all alerts are fatal). Fatal alerts always terminate the current connection, and prevent future re-negotiations using the current session ID.
 
 The alert messages are protected by the record protocol, thus the information that is included does not leak. Improper handling of alert messages can be vulnerable to truncation attacks.
 
-## Forward secrecy
+## Forward secrecy{#sec:TLS:forwardsecrecy}
 Forward secrecy is a property that describes whether leaking a long-term key fucks you up or not. If
 a leaked long term key (used for key generation) compromises session keys made before the long-term
 key was lost, you do not have forward secrecy. If only future session keys, made after the long-term
@@ -179,7 +179,7 @@ RSA-based handshakes in TLS does not provide forward secrecy.
 
 Diffie-Hellmann handshakes and ciphersuites in TLS does provide forward secrecy.
 
-## Attacks on TLS
+## Attacks on TLS {#sec:TLS:attacks}
 
 TLS 1.3 is the newest and safest version of TLS, which aimed to remove unnecessary/unsafe things and boost
 performance while retaining backwards compatibility. Sadly, TLS 1.3 isn't universally supported yet
@@ -220,7 +220,7 @@ certificate authority signed by itself which would allow superfish to put ads on
 This backfired the hell out of this world and allowed everyone to eavesdrop and tamper with encrypted
 traffic from these computers.
 
-## TLS 1.3
+## TLS 1.3{#sec:TLS:1.3}
 Some changes from TLS 1.2 to 1.3 has been already mentioned. For your viewing pleasure, a more
 readable and complete list is presented:
 
