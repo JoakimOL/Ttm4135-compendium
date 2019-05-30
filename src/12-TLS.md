@@ -165,9 +165,16 @@ The function `PRF` (pseudorandom function) used above is built from HMAC with a 
 function. Older TLS versions (1.0, 1.1) used MD5 and SHA-1, but newer (1.2+) uses SHA-2.
 
 ## Alert protocol{#sec:TLS:alert}
-The alert protocol is there to allow signals to be sent between peers. These signals are mostly used to inform the peer about the cause of a protocol failure. Some of these signals are used internally by the protocol and the application protocol does not have to cope with them, and others refer to the application protocol solely. An alert signal includes a level indication which may be either fatal, close_notify or warning (under TLS1.3 all alerts are fatal). Fatal alerts always terminate the current connection, and prevent future re-negotiations using the current session ID.
+The alert protocol is there to allow signals to be sent between peers. These signals are mostly
+used to inform the peer about the cause of a protocol failure. Some of these signals are used
+internally by the protocol and the application protocol does not have to cope with them, and
+others refer to the application protocol solely. An alert signal includes a level indication
+which may be either fatal, close_notify or warning (under TLS1.3 all alerts are fatal). Fatal
+alerts always terminate the current connection, and prevent future re-negotiations using the
+current session ID.
 
-The alert messages are protected by the record protocol, thus the information that is included does not leak. Improper handling of alert messages can be vulnerable to truncation attacks.
+The alert messages are protected by the record protocol, thus the information that is included
+does not leak. Improper handling of alert messages can be vulnerable to truncation attacks.
 
 ## Forward secrecy{#sec:TLS:forwardsecrecy}
 Forward secrecy is a property that describes whether leaking a long-term key fucks you up or not. If
@@ -186,7 +193,8 @@ performance while retaining backwards compatibility. Sadly, TLS 1.3 isn't univer
 so unsafe features are still used (like unsafe ciphers).
 
 ### BEAST
-BEAST (Browser Exploit Against SSL/TLS) exploits non-standard use of IV in CBC mode (see @sec:blockciphermodes:confidentiality:cbc). This attack allows the attacker to retrieve the plaintext.
+BEAST (Browser Exploit Against SSL/TLS) exploits non-standard use of IV in CBC mode
+(see @sec:blockciphermodes:confidentiality:cbc). This attack allows the attacker to retrieve the plaintext.
 
 No longer considered a threat, as TLS 1.1 only allows random IVs and browsers implement migitation
 strategies against it.
