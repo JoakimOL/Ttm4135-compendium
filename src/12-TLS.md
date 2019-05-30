@@ -161,3 +161,20 @@ ciphersuite the keying material, _k_, can be an encryption key, a MAC key, an IV
 
 The function `PRF` (pseudorandom function) used above is built from HMAC with a specified hash
 function. Older TLS versions (1.0, 1.1) used MD5 and SHA-1, but newer (1.2+) uses SHA-2.
+
+## Alert protocol
+The alert protocol is there to allow signals to be sent between peers. These signals are mostly used to inform the peer about the cause of a protocol failure. Some of these signals are used internally by the protocol and the application protocol does not have to cope with them, and others refer to the application protocol solely. An alert signal includes a level indication which may be either fatal, close_notify or warning (under TLS1.3 all alerts are fatal). Fatal alerts always terminate the current connection, and prevent future re-negotiations using the current session ID.
+
+The alert messages are protected by the record protocol, thus the information that is included does not leak. Improper handling of alert messages can be vulnerable to truncation attacks.
+
+## Forward secrecy
+Forward secrecy is a property that describes whether leaking a long-term key fucks you up or not. If
+a leaked long term key (used for key generation) compromises session keys made before the long-term
+key was lost, you do not have forward secrecy. If only future session keys, made after the long-term
+key was leaked, are compromised then you have forward secrecy.
+
+RSA-based handshakes in TLS does not provide forward secrecy.
+
+Diffie-Hellmann handshakes and ciphersuites in TLS does provide forward secrecy.
+
+
