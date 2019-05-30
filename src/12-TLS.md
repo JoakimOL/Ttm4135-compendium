@@ -4,7 +4,9 @@ Is one of the most widely used security protocol of today.
 It is the successor of SSL, which is now advised against, and is still being developed - the newest
 version, TLS 1.3, was released in 2018. TLS is based on the use of a PKI and is often used to
 establish secure sessions with web servers, among other things. The design goal is to secure
-reliable end-to-end services over TCP (although UDP-variants exist).
+reliable end-to-end services over TCP, using TCP (although UDP-variants exist).
+
+Even though TLS 1.3 is released, the most supported version is 1.2.
 
 TLS consists of three higher level protocols:
 
