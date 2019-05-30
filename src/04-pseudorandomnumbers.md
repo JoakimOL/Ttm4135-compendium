@@ -32,7 +32,7 @@ TRNG. This is measured by two properties:
 1.  Backtracking resistance
     - An attacker who knows the current state of the DRBG cannot distinguish between earlier
       outputs.
-    - If you see one output, you cannot make sense of, or guess, earlier outputs?
+    - If you see one output, you cannot make sense of, or guess, earlier outputs
 2. forward prediction resistance
     - An attacker who knows the current state of the DRBG should not be able to distinguish between
       later states and the current.
@@ -78,9 +78,9 @@ Decryption: $p(t) = c(t) \oplus s(t)$
 ## Shannon's definition of perfect secrecy{#sec:stream:secrecy}
 > to define perfect secrecy, consider a cipher with message set _M_ and ciphertext set _C_.
 > Then $PR(M_i|C_j)$ is the probability that the message $M_i$ was encrypted given that ciphertext
-> $C_i$ is observed.
+> $C_j$ is observed.
 > The cipher achieves perfect secrecy if for all messages and ciphertexts that
-> $Pr(M_i | C_i ) == Pr(M_i)$
+> $Pr(M_i | C_j ) == Pr(M_i)$
 
 If we cannot tell whether the message is encrypted with one key or another, and everything is just
 complete bullshittery guessing - it is a perfect secret.

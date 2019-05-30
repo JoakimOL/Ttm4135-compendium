@@ -9,7 +9,7 @@ should be at least 1024 bits by today's standards (according to slides.).
 
 Next up is _e_. It only needs to satisfy $gcd(e,\phi(n)) = 1$. 3 is the smallest possible value, and is
 sometimes used. Not recommended as it might introduce security problems. However,
-65537 ($2^{16}+1$, or $2^{2^4}$) is a popular choice. Since it is prime (largest known prime on the
+65537 ($2^{16}+1$, or $2^{2^4}+1$) is a popular choice. Since it is prime (largest known prime on the
 form $2^{2^{n}}+1$, called a Fermat prime), it satisfies the equation for every _n_ and does not require
 any additional checking. As an added bonus, this number has just two set bits in binary
 (`10000000000000001`). This makes it an easy number to perform arithmetic on.

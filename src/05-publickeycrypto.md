@@ -43,7 +43,7 @@ $\mathbb{Z}_n^* = {1,3,7,9}$
 1. $\phi(p) = p-1$ for p prime
 2. $\phi(pq) = (p-1)(q-1)$ for p and q distinct primes
 3. let $n = p_1^{e_1} ... p_t^{e_t}$ where $p_i$ are distinct primes. Then $\phi(n) = \prod
-   p_i^{e_1-1}(p_i-1)$ (generalization of point 2)
+   p_i^{e_i-1}(p_i-1)$ (generalization of point 2)
 
 Example:
 
