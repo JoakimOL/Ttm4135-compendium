@@ -218,7 +218,7 @@ For example: (from exam 2018)\
 - $p = 7$
 - $\mathbb{Z}_7^*$ has a generator $g = 4$ if the test holds.
 - 4 has just one prime factor, 2.
-- $g^{\frac{6}{2}} \neq 1$
+- $g^{\frac{6}{2}} = 1$
 - This means that $g = 4$ is not a generator for $\mathbb{Z}_7^*$
 
 ##  Fields
