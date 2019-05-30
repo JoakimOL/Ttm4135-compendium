@@ -13,12 +13,14 @@ Public knowledge includes:
 
 ## Basic protocol {#sec:diffiehellmann:protocol}
 
-Alice chooses an _a_ $\in \mathbb{Z}_p^*$ , sends $K_a = g^a \mod p$ to Bob.
-Next, Bob chooses a _b_ $\in \mathbb{Z}_p^*$ and sends $K_b = g^b \mod p$ to Alice.
+Alice chooses  _a_ $\in \mathbb{Z}_p^*$ and sends $K_a = g^a \mod p$ to Bob.
+Next, Bob chooses _b_ $\in \mathbb{Z}_p^*$ and sends $K_b = g^b \mod p$ to Alice.
+
+_a_ and _b_ must satisfy $0 < a,b < p-1$.
 
 Now both have knowledge of a $Z = (g^b)^a \mod p$. _Z_ can be used to compute a key for various
 crypto schemes. It is secure, as the only numbers that are being broadcast are $g^a \mod p$ and
-$g^b \mod p$. To find A and B from this you'd need to factorise the numbers which is hard.
+$g^b \mod p$. To find _a_ and _b_ from this you'd need to solve the discrete logarithm problem, which is hard.
 
 ## Authenticated diffie hellmann{#sec:diffiehellmann:authenticatedDH}
 It is rather easy to set up a man in the middle attack for this scheme. Just have the adversary set
@@ -37,7 +39,7 @@ This is fixed by adding digital signatures.
 ## static and ephemeral diffie-hellmann{#sec:diffiehellmann:staticephemeral}
 The protocol described above uses _ephemeral keys_: Keys which are used once and then discarded. In
 a static diffie-hellmann scheme you'd let each party choose a long-term private key $X_a$ with
-corresponding key $Y_a = g^{xA} \mod p$. If each party has a long term key, they can simply look up
+corresponding key $Y_a = g^{x_a} \mod p$. If each party has a long term key, they can simply look up
 each others keys and possibly skip the initial handshake.
 
 # Elgamal cryptosystem{#sec:elgamal}
@@ -65,7 +67,7 @@ Decryption: \
 The private key for encryption is $K_D = x$ with $y = g^x \mod p$
 
 1. let $C = (C_1, C_2)$
-2. $D(C_1,K_D) = C2 \cdot (C_1^x)^{-1} \mod p = M$
+2. $D(C_1,K_D) = C_2 \cdot (C_1^x)^{-1} \mod p = M$
 
 
 ## Why does it work?{#sec:elgamal:why}
