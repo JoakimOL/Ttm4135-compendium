@@ -58,4 +58,49 @@ STARTTLS only uses TLS when possible, so it is vulnerable to a so-called STRIPTL
 where the attacker interrupts the TLS negotiation causing the system to fall back to plaintext
 transmission.
 
+## End to end security
+
+### PGP - Pretty good privacy
+PGP protect the contents of emails.
+
+A random session key is generated for each message, and this key is encrypted using
+the long-term public key of the recipient (asymmetric encryption). The messages themselves are
+encrypted using symmetric encryption using the session key. OpenPGP requires support for Elgamal and
+recommends support for RSA encryption as well for the asymmetric algorithm. The symmetric algorithm
+requires support for 3DES with three keys (168 bits), but recommends AES-128 and CAST5. Definitions
+for other algorithms also exist.
+
+The messages are optionally signed using RSA or DSA signatures, then compressed using zip to a base64
+encoding to ensure compatibility. RSA signed messages are hashed using SHA1, which is has required
+support by the standard), or SHA2. Compression happens before encryption. Encryption can be applied
+independently of signing, i.e. there is no requirement of authenticated encryption.
+
+### "Web of Trust"
+Each user generate their own public/private keys, and distribute the public keys to key servers. Key
+servers talk to each other, ensuring that your key will be available to everyone eventually. Any PGP
+user can sign another user's public key to indicate their level of trust. Any user can revoke their
+own keys by signing a revocation certificate and sending to key server. Key servers then revoke your
+key across all servers.
+
+### Usability
+A problem with PGP is the amount of understanding a user should have. Average Joes may not
+understand the theory behind PGP and thus use it in an unsafe manner.
+
+Vulnerabilities like EFail use pieces of HTML code to trick users to reveal encrypted messages.
+
+Despite this, the amount of users (or active keys, at least) is rising. PGP is getting easier to use
+too, with plugins for popular mail clients being available.
+
+### Criticism
+The OpenPGP standard still use outdated algorithms like SHA1 and CAST, and does not support newer
+and/or safer algorithms like SHA3 and authenticated encryption like GCM.
+
+The message contents are well protected but a lot of metadata is being leaked, such as recipients,
+file length and algorithm used.
+
+OpenPGP does not support streaming mode or random access decryption. This means that you have to
+wait till you have received the entire message before decrypting. You can also not decrypt part of a
+message, you can only decrypt it in its entirety
+
+### S/MIME
 
