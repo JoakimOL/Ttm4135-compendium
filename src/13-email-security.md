@@ -58,10 +58,10 @@ STARTTLS only uses TLS when possible, so it is vulnerable to a so-called STRIPTL
 where the attacker interrupts the TLS negotiation causing the system to fall back to plaintext
 transmission.
 
-## End to end security
+## End to end security{#sec:email:end}
 
-### PGP - Pretty good privacy
 PGP protect the contents of emails.
+### PGP - Pretty good privacy{#sec:email:end:pgp}
 
 A random session key is generated for each message, and this key is encrypted using
 the long-term public key of the recipient (asymmetric encryption). The messages themselves are
@@ -75,14 +75,14 @@ encoding to ensure compatibility. RSA signed messages are hashed using SHA1, whi
 support by the standard), or SHA2. Compression happens before encryption. Encryption can be applied
 independently of signing, i.e. there is no requirement of authenticated encryption.
 
-### "Web of Trust"
+### "Web of Trust"{#sec:email:end:weboftrust}
 Each user generate their own public/private keys, and distribute the public keys to key servers. Key
 servers talk to each other, ensuring that your key will be available to everyone eventually. Any PGP
 user can sign another user's public key to indicate their level of trust. Any user can revoke their
 own keys by signing a revocation certificate and sending to key server. Key servers then revoke your
 key across all servers.
 
-### Usability
+### Usability{#sec:email:end:usability}
 A problem with PGP is the amount of understanding a user should have. Average Joes may not
 understand the theory behind PGP and thus use it in an unsafe manner.
 
@@ -91,7 +91,7 @@ Vulnerabilities like EFail use pieces of HTML code to trick users to reveal encr
 Despite this, the amount of users (or active keys, at least) is rising. PGP is getting easier to use
 too, with plugins for popular mail clients being available.
 
-### Criticism
+### Criticism{#sec:email:end:criticism}
 The OpenPGP standard still use outdated algorithms like SHA1 and CAST, and does not support newer
 and/or safer algorithms like SHA3 and authenticated encryption like GCM.
 
@@ -102,5 +102,5 @@ OpenPGP does not support streaming mode or random access decryption. This means 
 wait till you have received the entire message before decrypting. You can also not decrypt part of a
 message, you can only decrypt it in its entirety
 
-### S/MIME
+### S/MIME {#sec:email:end:smime}
 

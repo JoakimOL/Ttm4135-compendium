@@ -175,7 +175,7 @@ CAs create, issue and revoke certs for subscribers to that CA and other CAs.
 CAs have a certification practice statement (CPS) covering several issues like
 legal and privacy issues and checks they perform before a cert is issued.
 
-The X.509 standard is the most widely used standard of digital certificates.
+The `X.509 `standard is the most widely used standard of digital certificates.
 Important fields included in this standard includes:
 
 - Version number
