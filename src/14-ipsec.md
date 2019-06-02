@@ -45,13 +45,16 @@ architecture to implement and maintain, as it requires sometimes manual manageme
 
 ## Protocols{#sec:ipsec:protocol}
 `Authentication Header` (AH) provides authentication, integrity and replay
-protection. It is deprecated and should not be used.
+protection. It is deprecated and should not be used. Our focus will be on `ESP` instead.
 
-`Encapsulating Security Payload` (ESP) provides the same as AH with the addition of confidentality
+`Encapsulating Security Payload` (ESP) provides the same as AH with the addition of confidentality.
+Which services ESP offers depends on how the security association is set up as well as the location
+in the network topology.
 
 An IPSec connection uses either AH or ESP.
 
 `Internet Key Exchange` (IKE) negotiates, creates and manages session keys in security associations.
+
 A security association is a one-way connection between a sender and a receiver that supports
 security services on the traffic carried on it. It contains info needed by an IPsec endpoint
 to support the IPsec connection.  This info can include things like keys, algorithms, expiration
@@ -59,3 +62,7 @@ dates for keys, security protocol identifier (AH or ESP) and a security paramete
 SPI is used to associate a packet with the appropriate security association. As stated above,
 Security associations are unidirectional, which means you need one for incoming and outgoing
 traffic for every connection.
+
+## Modes {#sec:ipsec:modes}
+An IPsec connection, no matter if it runs AH or ESP, support two modes of use: `transport mode` and
+`tunnel mode`.
