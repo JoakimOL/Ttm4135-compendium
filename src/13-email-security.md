@@ -123,7 +123,7 @@ Authentication is provided through a digital signature, most commonly RSA with S
 2. SHA-256 is used to generate a 256-bit hash of the message
 3. the hash is encrypted with RSA using senders private key, append result and identifying
    information to the message. (so the receiver can retrieve the signers' public key)
-4. The receiver uses RSA with the senders' public key to decrypt the hash.
+4. The receiver uses RSA with the senders' public key to obtain the hash.
 5. The receiver hashes the received message and checks if it matches the decrypted hash.
 
 Because of the strength of both SHA-256 and RSA, the recipient can be confident that the one with
