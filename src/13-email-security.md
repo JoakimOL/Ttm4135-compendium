@@ -32,7 +32,7 @@ verification fail, the email is discarded and the user will never see it. The ve
 fail if an email states it is from one place, but in reality it is from another. No part of this scheme
 requires user interaction.
 
-Both headers and messages are signed, Unlike S/MIME (see @sec:TODO) where only the message content
+Both headers and messages are signed, Unlike S/MIME (see @sec:end:smime) where only the message content
 is signed. Another difference from S/MIME is that DKIM applies to all mail from domains that use it.
 S/MIME depends on whether each user uses it or not (and few people do).
 

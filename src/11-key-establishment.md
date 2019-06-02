@@ -74,7 +74,7 @@ sender. This does not provide forward secrecy.
 
 ### Key agreement {#sec:keys:asymmetric:agreement}
 Both parties provide input for the keying material generation. It is common to provide
-authentication by signing messages here. Diffie-Hellmann is an example of a commonly used key
+authentication by signing messages here. Diffie-Hellman is an example of a commonly used key
 agreement protocol.
 
 ## Session key distribution with online server {#sec:keys:server}
@@ -113,11 +113,11 @@ key was leaked, are compromised then you have forward secrecy.
 
 RSA-based handshakes in TLS does not provide forward secrecy.
 
-Signed Diffie-Hellmann handshakes and ciphersuites in TLS does provide forward secrecy. This is
+Signed Diffie-Hellman handshakes and ciphersuites in TLS does provide forward secrecy. This is
 because the long-term keys are only used for authentication.
 
-## Authenticated Diffie-Hellmann {#sec:keys:authDH}
-The authenticated Diffie-Hellmann is a small addition to the basic protocol described in @sec:diffiehellmann:protocol. We assume all parties know the verification keys of the other parties.
+## Authenticated Diffie-Hellman {#sec:keys:authDH}
+The authenticated Diffie-Hellman is a small addition to the basic protocol described in @sec:diffiehellman:protocol. We assume all parties know the verification keys of the other parties.
 
 After Bob has received $g^a$ and is going to reply with $g^b$, Bob adds a signature of $B || A || g^b
 || g^a$ to the reply. When Alice receives this, she verifies the signature received. If it is valid,

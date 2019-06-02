@@ -72,7 +72,7 @@ authenticates the client, but it is not always required.
 There are several variants:
 
 - RSA
-- Diffie-Hellmann
+- Diffie-Hellman
 - pre-shared key
 - mutual authentication or server-only authentication
 
@@ -124,16 +124,16 @@ An example of a ciphersuite is TLS_RSA_WITH_3DES_EDE_CBC_SHA. This unholy abomin
 The first part denotes the handshake algorithm, the second part denotes (authenticated)encryption
 scheme and the third part denotes the means of achieving integrity (key deriving or hash function) ?
 
-## Ephemeral Diffie-Hellmann handshake{#sec:TLS:EDH}
+## Ephemeral Diffie-Hellman handshake{#sec:TLS:EDH}
 This is one of several variants of the TLS handshake protocol.
 
 The server key exchange sends the generator, group parameters and the server ephemeral value
-to be used in Diffie-Hellmann. All of these values are signed by the server.
+to be used in Diffie-Hellman. All of these values are signed by the server.
 
-The client key exchange sends the client ephemeral Diffie Hellmann value, which  might be signed
+The client key exchange sends the client ephemeral Diffie-Hellman value, which  might be signed
 depending on whether client certification is used or not.
 
-Pre-master secret, _pms_, is the shared Diffie-Hellmann secret.
+Pre-master secret, _pms_, is the shared Diffie-Hellman secret.
 
 
 ## RSA handshake{#sec:TLS:RSA}
@@ -144,10 +144,10 @@ and encrypting it with the server's public key. The server then retrieves _pms_ 
 using its own private key.
 
 ## Other variants{#sec:TLS:other}
-(Static) Diffie-Hellmann can be used with certified keys. Should the client not have a cert (which
-often is the case browsing the internet), then the client uses an ephemeral Diffie-Hellmann key.
+(Static) Diffie-Hellman can be used with certified keys. Should the client not have a cert (which
+often is the case browsing the internet), then the client uses an ephemeral Diffie-Hellman key.
 
-Another variant is the anonymous Diffie-Hellmann. Here the ephemeral keys are not signed, which
+Another variant is the anonymous Diffie-Hellman. Here the ephemeral keys are not signed, which
 means they are only protected against passive eavesdropping.
 
 ## Generating session keys{#sec:TLS:sessionkeys}
@@ -225,7 +225,7 @@ readable and complete list is presented:
 Things removed:
 
 - Static RSA key exchange
-- Diffie-Hellmann  key exchange
+- Diffie-Hellman  key exchange
 - session renegotiation
 - SSL negotiation
 - DSA

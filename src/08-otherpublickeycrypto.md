@@ -1,4 +1,4 @@
-# Diffie Hellmann key exchange {#sec:diffiehellmann}
+# Diffie-Hellman key exchange {#sec:DiffieHellman}
 
 ## Motivation
 
@@ -11,7 +11,7 @@ Public knowledge includes:
 - Large prime, _p_
 - generator g of $\mathbb{Z}_p^*$
 
-## Basic protocol {#sec:diffiehellmann:protocol}
+## Basic protocol {#sec:diffiehellman:protocol}
 
 Alice chooses  _a_ $\in \mathbb{Z}_p^*$ and sends $K_a = g^a \mod p$ to Bob.
 Next, Bob chooses _b_ $\in \mathbb{Z}_p^*$ and sends $K_b = g^b \mod p$ to Alice.
@@ -34,16 +34,16 @@ Alice and Bob cannot in reality send messages directly to each other, it has to 
 the middle, which can read everything thanks to the keys.
 
 This is fixed by adding digital signatures, see @sec:digitalsignaures for details on the signatures.
-The authenticated Diffie-Hellmann that fixes this problem is shown in @sec:keys:authDH.
+The authenticated Diffie-Hellman that fixes this problem is shown in @sec:keys:authDH.
 
-## static and ephemeral diffie-hellmann{#sec:diffiehellmann:staticephemeral}
+## static and ephemeral Diffie-Hellman{#sec:diffiehellman:staticephemeral}
 The protocol described above uses _ephemeral keys_: Keys which are used once and then discarded. In
-a static diffie-hellmann scheme you'd let each party choose a long-term private key $X_a$ with
+a static Diffie-Hellman scheme you'd let each party choose a long-term private key $X_a$ with
 corresponding key $Y_a = g^{x_a} \mod p$. If each party has a long term key, they can simply look up
 each others keys and possibly skip the initial handshake.
 
 # Elgamal cryptosystem{#sec:elgamal}
-> Turning the diffie-hellmann protocol into a cryptosystem since 1985
+> Turning the Diffie-Hellman protocol into a cryptosystem since 1985
 
 Based on one party having ephemeral keys, while the other has a long-term key. The long-term key
 works like a public key, while the ephemeral keys are private
@@ -73,7 +73,7 @@ The private key for encryption is $K_D = x$ with $y = g^x \mod p$
 ## Why does it work?{#sec:elgamal:why}
 The sender knows the ephemeral private key _k_.
 The receiver knows the static private key _x_.
-Both sender and recipient can compute the diffie-hellmann value for the two public keys $C_1 = g^k
+Both sender and recipient can compute the Diffie-Hellman value for the two public keys $C_1 = g^k
 \mod p$ and $y =g^x \mod p$. The value $y^k \mod p = C_1^x \mod p$ is used as a mask for the message
 _m_ that pushes the value to another value in that group.
 
@@ -101,7 +101,7 @@ curve discrete logarithm problem are exponential with the length of the paramete
 most elliptic curve implementations use much smaller keys. If we compare this to RSA, the relative
 advantage of elliptic curve cryptography will increase at higher security levels.
 
-We can use elliptic curves in several cryptosystems, like the diffie hellmann key exchange
+We can use elliptic curves in several cryptosystems, like the Diffie-Hellman key exchange
 and elgamal.
 
 
