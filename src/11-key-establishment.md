@@ -28,8 +28,8 @@ need for further RSA communication.
 There are three common ways to establish keys between parties:
 
 1. pre distribution
-2. online server with symmetric long-term keys
-3. asymmetric long-term keys
+2. asymmetric long-term keys
+3. online server with symmetric long-term keys
 
 When evaluating the security of a key distribution protocol we look at the following properties:
 
@@ -77,9 +77,9 @@ Both parties provide input for the keying material generation. It is common to p
 authentication by signing messages here. Diffie-Hellman is an example of a commonly used key
 agreement protocol.
 
-## Session key distribution with online server {#sec:keys:server}
+## Session key distribution with online server/Needham-Schroeder {#sec:keys:server}
 These methods rely on an online TA that holds keys for every user.
-There iscomplete faith in the server, and the security of the whole system depends on it.
+There is complete faith in the server, and the security of the whole system depends on it.
 It breaks if the server goes down, or if the server itself is malicious/attacked.
 Scalability might also become a problem.
 
@@ -90,9 +90,9 @@ it. In order to obtain a session key from parties A to B, the following steps ar
 0. A and B are already in the system, meaning the server has a long term key for both parties, $K_A$
    and $K_B$.
 1. A sends a request to the server for a session key with B. This request includes info to identify
-   A and B, as well as a unique nonce. The nonce is used for security checking
+   A and B, as well as a unique nonce, $N_A$. The nonce is used for security checking later.
 2. The server responds with a message encrypted with $K_A$. It contains a session key that works
-   between A and B, as well as the original request, including nonce, to enable A to verify the
+   between A and B, as well as the original request, including $N_A$, to enable A to verify the
    request was not altered. It also contains the session key and the identifier of A, encrypted with
    $K_B$, so only B can read it.
 3. A needs to send the last part of the message to B, since only B can decrypt it.
@@ -104,6 +104,30 @@ Two more steps are often also desired, as they add authentication.
 5. A replies with the result of a transformation on the received nonce (adding one for example)
 
 This protocol is called the `Needham-Schroeder protocol`
+
+### Fixing the Needham-Schroeder protocol {#sec:keys:server:fixing}
+Needham-Schroeder has an unfortunate vulnerability to replay attacks, where the attacker
+is able to replay old messages to make the honest party accept an old session key.
+
+Assuming the attacker gets hold of an old session key sent from the server and nonce in stage 2, it can
+masquerade as party A to persuade B to use the old key. Unless B keeps track of used nonces, it
+shouldn't notice a thing.
+
+To defend against this, we need keys to be "fresh" (new) for each session. There are three main
+ways of accomplishing this:
+
+1. nonces / "random challenges"
+2. timestamps
+3. counters
+
+Fixing the problem using nonces requires B to send A a nonce,  $N_B$, which A includes in its
+initial request to the server. The server replies in the normal way, including the nonces, key and a
+part that is meant for B, encrypted using the public key of B.
+Finally, A sends the part of the reply meant for B to B. B can then verify the nonce it started the
+protocol with.
+
+similar fixes can be done using timestamps and counters, as it is easy to check whether these are
+old or not.
 
 ## Forward secrecy{#sec:keys:forwardsecrecy}
 Forward secrecy is a property that describes whether leaking a long-term key fucks you up or not. If
@@ -128,13 +152,87 @@ the signature and calculates the key if it is valid, and aborts otherwise.
 
 This provides forward secrecy because the long-term keys are only used for authentication.
 
-## Fixing the Needham-Schroeder protocol {#sec:keys:fixing}
-@sec:keys:server described the `Needham-Schroeder protocol`, which is widely used and is used as the
-basis of other protocols. It does, however, have an unfortunate vulnerability to replay attacks,
-where the attacker is able to replay old messages to make the honest party accept an old session
-key.
+## Kerberos {#sec:keys:kerberos}
+Kerberos aims to provide secure network authentication in an insecure network environment. It
+features a single-sign on solution to selectively provide services using individual tickets. It
+establishes session keys to deliver confidentiality and integrity.
 
+Kerberos is divided into three levels:
 
+### Level 1 - authentication server {#sec:keys:kerberos:level1}
+> A client, _C_, interacts with the authentication server, _AS_ in order to obtain a ticket-granting ticket.
+> This happens once for a session.
 
+The client sends identifying information about itself and the ticket-granting server (_TGS_) it wishes to
+communicate with, as well as a nonce.
 
+Request = $ID_C, ID_{TGS}, N_1$, where $ID_C$ and $ID_{TGS}$ is the identity of the client and TGS,
+respectively.
 
+The authentication server replies with a symmetric key $K_{C, TGS}$, as well as the original message,
+encrypted with the public key of C, similar to Needham-Schroeder.
+The nonce is used to check that the key is fresh, like in Needham-Schroeder. A ticket is also received
+in this stage.
+
+Response = $\{K_{C, TGS}, ID_{TGS}, N_1\}_{K_{C}}, ticket_{TGS}$
+
+Tickets allow clients to access a server within a validity period, and contain information about the
+client, the symmetric key to use and the validity period.
+
+$ticket_{tgs} = \{K_{C, TGS}, ID_C, T_1\}_{K_{tgs}}$, where $K_{tgs}$ is a long term key shared
+between AS and TGS and $T1$ is a validity period
+
+The ticket, $ticket_{tgs}$, is used to obtain different service-granting tickets from the
+ticket-granting server.
+
+### Level 2 - ticket-granting server {#sec:keys:kerberos:level2}
+> The client, _C_, interacts with the ticket-granting server, _TGS_, in order to obtain a service ticket. This
+> happens once for each server during the session.
+
+Pretty much the same thing, except we identify an application server, _V_, instead of a _TGS_.
+Initial request sends the identity of _V_, $ID_V$, a new nonce, $N_2$, the ticket from the
+previous level and a so-called authenticator.
+
+The authenticator includes your identity as well as a timestamp, encrypted with the symmetric key
+$K_{C,TGS}$. The queried _TGS_ checks that this timestamp is recent, and that your identity is authorized
+to access the requested service.
+
+$Authenticator_{TGS}$ = $\{ID_C, TS_1\}_{K_{C,TGS}}$
+
+Request = $ID_V, N_2, ticket_{tgs}, authenticator_{tgs}$
+
+If the checks performed by _TGS_ show a green light, a normal Needham-Schroeder-esque response is
+received: A key to communicate with _V_, $K_{C,V}$ and the original request, encrypted using the
+symmetric key obtained from the previous level, $K_{C, TGS}$, and a new ticket for _V_.
+
+Response = $ID_C, ticket_V, \{K_{C,V},N_2,ID_V\}_{K_{C,TGS}}$
+
+The ticket, $ticket_{v}$, is used to access a specific server _V_.
+
+### Level 3 - application server {#sec:keys:kerberos:level3}
+> The client, _C_, interacts with the application server, _V_, in order to obtain a service. This happens
+> once for each time the client requires service during a session.
+
+We already have access to _V_ after level 2. We send our ticket, $ticket_V$, and a new authenticator
+with a new timestamp to the server.
+
+$Authenticator_V$ = $\{ID_C, TS_2\}_{K_{C,V}}$
+
+Request = $ticket_V, authenticator_V$
+
+In response the server sends back the timestamp encrypted using the symmetric key from
+the previous level. This reply intends to provide mutual authentication so the client,
+_C_, can check it is using the right service, _V_.
+
+Response = $\{TS_2\}_{K_{C,V}}$
+
+### Limitations {#sec:keys:Kerberos:limitations}
+Kerberos does support different "realms", this means having multiple authentication servers that run
+provide different services. Despite this, scalability is an issue. Because of this kerberos is best
+suited for corporate environments with shared trust.
+
+It is possible to guess passwords when the client key, $K_C$, is derived from a human memorable
+password.
+
+The Kerberos standard does not specify how to use the session keys/tickets after their
+establishment. This allows for unsecure implementations.
