@@ -176,16 +176,6 @@ current session ID.
 The alert messages are protected by the record protocol, thus the information that is included
 does not leak. Improper handling of alert messages can be vulnerable to truncation attacks.
 
-## Forward secrecy{#sec:TLS:forwardsecrecy}
-Forward secrecy is a property that describes whether leaking a long-term key fucks you up or not. If
-a leaked long term key (used for key generation) compromises session keys made before the long-term
-key was lost, you do not have forward secrecy. If only future session keys, made after the long-term
-key was leaked, are compromised then you have forward secrecy.
-
-RSA-based handshakes in TLS does not provide forward secrecy.
-
-Diffie-Hellmann handshakes and ciphersuites in TLS does provide forward secrecy.
-
 ## Attacks on TLS {#sec:TLS:attacks}
 
 TLS 1.3 is the newest and safest version of TLS, which aimed to remove unnecessary/unsafe things and boost

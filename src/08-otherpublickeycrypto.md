@@ -22,19 +22,19 @@ Now both have knowledge of a $Z = (g^b)^a \mod p$. _Z_ can be used to compute a 
 crypto schemes. It is secure, as the only numbers that are being broadcast are $g^a \mod p$ and
 $g^b \mod p$. To find _a_ and _b_ from this you'd need to solve the discrete logarithm problem, which is hard.
 
-## Authenticated diffie hellmann{#sec:diffiehellmann:authenticatedDH}
 It is rather easy to set up a man in the middle attack for this scheme. Just have the adversary set
 up keys with both Alice and Bob, and just relay the messages using these keys. Alice and Bob
 shouldn't be any wiser.
 
-Alice thinks she sends message to Bob, is in reality sending to malicious attacker - constructs
+Alice thinks she sends message to Bob, is in reality sending to malicious attacker who constructs
 $K_{ac}$. The attacker does the same with Bob and constructs $K_{bc}$. If Alice wants to send
 something to Bob, it goes through the attacker using $K_{ac}$ and is passed onto Bob using $K_{bc}$.
 
 Alice and Bob cannot in reality send messages directly to each other, it has to go through the man in
 the middle, which can read everything thanks to the keys.
 
-This is fixed by adding digital signatures.
+This is fixed by adding digital signatures, see @sec:digitalsignaures for details on the signatures.
+The authenticated Diffie-Hellmann that fixes this problem is shown in @sec:keys:authDH.
 
 ## static and ephemeral diffie-hellmann{#sec:diffiehellmann:staticephemeral}
 The protocol described above uses _ephemeral keys_: Keys which are used once and then discarded. In
