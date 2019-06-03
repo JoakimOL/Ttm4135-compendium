@@ -170,8 +170,9 @@ There are three possible ways to combine encryption and MACs:
     - $T \leftarrow MAC(C,K_2)$
     - Send $C||T$
 
-Encrypt-then-MAC is the safest of the three. (Because the tag cannot possibly leak information about
-the plaintext?)
+Encrypt-then-MAC is the safest of the three. Encrypt-and-MAC is the worst because the MAC cannot
+guarantee that it wont leak information. MAC-then-encrypt has the same weakness, but at least it
+encrypts the MAC.
 
 Some schemes do, however, provide both confidentiality and integrity with one key.
 
