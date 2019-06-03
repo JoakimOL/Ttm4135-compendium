@@ -88,7 +88,7 @@ optional authentication. Keep in mind that the padding pads both the ip header a
 can be encrypted. The MAC includes the ip header as well. Since the IP header is encrypted
 and hidden, we need a new one. A new outer IP header is added, which may contain distinct
 addresses such as security gateways (to enter a network, where the inner IP address is valid).
-The protocol field is set to ESP. The original IP header is left unmodified
+The protocol field is set to ESP. The original IP header is left unmodified.
 
 This is mostly use in gateway-to-gateway architectures
 
@@ -101,4 +101,28 @@ In the words of a smart friend:
 Attacks against ESP without authentication exist, which caused the new 2005 version of IPsec to not
 require support for encryption-only mode. Still supported for legacy reasons.
 
-ESP encrypts before MAC, but AH MACs before encryption. Attacks against this is known.
+ESP encrypts before MAC, which is safe, but AH MACs before encryption. Attacks against this is known.
+
+## Use cases
+In some cases, TLS will be best suited to provide protection, while IPsec will be best in other
+cases. Consider the following scenario (mildly adapted from worksheet 7, 2019):
+
+> You have two applications on your server, which you want to secure with independent keys and
+> different security services. Should you use IPsec in a host-to-gateway architecture or TLS?
+
+IPSec with host-to-gateway architecture only protects traffic betweeen the host and the gateway. This
+means there will be unsecure traffic between the gateway and the application server. You'd also
+maybe have difficulties configuring each applications security features with IPsec. TLS allows you
+to set up different certificates and ciphersuites for each application, which solves the problem.
+
+> You want to secure a server which has a number of applications and you may want to add new
+> applications in the future without changing the security settings. Should you use IPsec in a
+> host-to-gateway architecture or TLS?
+
+IPSec with host-to-gateway architectures provides the security services needed for this scenario. It
+provides security for all the IP traffic between the hst and the gateway, so any applications
+running on the host will be protected - removing the need to change settings when adding apps.
+
+Note that end-to-end security will not be provided in this way, using only ipsec with host-to-gateway.
+
+If we chose to use TLS here, we'd have to set up the protocol and certificates for every application
