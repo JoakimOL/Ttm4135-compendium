@@ -73,6 +73,8 @@ The signature _s_ is computed as $h(m)^d\mod n$.
 Signature verification takes the signature and the public key _e_ as input. If $s^e \mod n =
 h\prime$ the signature is legit.
 
+RSA signature generation is fast, which is why it sees much use.
+
 ## Elgamal signature scheme in $\mathbb{Z}_p^*$ {#sec:digsig:elgamal}
 Signature scheme based on the discrete logarithm problem. It consists of the following keys, given
 _p_, a large prime with generator _g_:
@@ -91,7 +93,6 @@ Signature verification:
 
 1. verify that $g^m \equiv y^r r^s (\mod p)$
 
-RSA signature generation is fast, which is why it sees much use.
 
 
 ## Digital signature algorithm (DSA) {#sec:digsig:DSA}
