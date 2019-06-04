@@ -147,9 +147,9 @@ seem random)
 
 ## Combining encryption and MAC{#sec:authencryption:combining}
 
-How do you ensure both confidentiality (no one can read your messages) and integrity (you know the
-message is from a legitimate sender)? A proposed solution is to split your assumed established shared
-key, _K_, into two parts - one for encryption and one to obtain a MAC.
+How do you ensure both confidentiality (no one can read your messages) and integrity (the messages
+aren't tampered with)? A proposed solution is to split your assumed established shared key, _K_,
+into two parts - one for encryption and one to obtain a MAC.
 
 There are three possible ways to combine encryption and MACs:
 
