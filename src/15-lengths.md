@@ -1,5 +1,7 @@
 # Comparisons and summaries
 
+Smallest acceptable key length to prevent exhaustive key search = 256 bits
+
 | symmetric key length | RSA key length | Elliptic curve key length  |
 | -------------------- | ------------   | -------------------------- |
 | 80 bits              | 1024 bits      | 160                        |
@@ -10,18 +12,28 @@
 : different key lengths in different schemes with same security rating
 
 
-|                | AES                 | DES              | RSA           | Elgamal      |
-| -------------- | ------------------- | -----------      | ----------    | ------------ |
-| key length     | 128,192,256 bits    | 56 bits          | $n + \phi(n)$ | $2p + g$    |
-| block length   | 128 bits            | 64 bits          |               |              |
-| output length  | depends on mode*    | depends on mode* | n             | 2*p          |
+|                | AES                 | DES              |
+| -------------- | ------------------- | -----------      |
+| key length     | 128,192,256 bits    | 56 bits          |
+| block length   | 128 bits            | 64 bits          |
+| output length  | depends on mode*    | depends on mode* |
 
-: comparison of encryption schemes
-
-Smallest acceptable key length to prevent exhaustive key search = 256 bits
+: comparison of symmetric/shared key encryption schemes
 
 if mode uses padding scheme: output is a multiple of block length. If not, it is equal to
 plaintext length
+
+|                    | RSA                            | Elgamal                     |
+| ------------------ | ----------                     | ------------                |
+| public key length  | size of n and d: $n + \phi(n)$ | size of p,g,y: $p + 2(p-1)$ |
+| private key length | size of e: $\phi(n)$           | size of x: p-1              |
+| output length      | n                              | 2*p                         |
+
+: comparison of asymmetric/public key encryption schemes
+size of g,y,x is p-1 because their domain is 1 < g,y,x < p\
+(Possibly obvious exam note: if p and n are of the same size, Elgamal produces a cipher text that is
+twice as long as RSA. Exam may 2016)
+
 
 | property              | EBC               | CBC                                          | CTR                         |
 | --------------------- | ----------------- | -------------------------------------------- | --------------------------- |
@@ -56,3 +68,8 @@ plaintext length
 | SHA-512     | 512 bits    | 1024 bits    |
 
 : overview of hash algorithms
+
+Remember that all SHA algorithms are padded with at least 1 bit + the length field up to a complete
+number of blocks.
+
+The length field is 64 bits for 512 bit block sizes and 128 bits for 1024 bit block sizes.
