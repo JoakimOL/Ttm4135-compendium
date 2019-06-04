@@ -113,12 +113,60 @@ During the round function _g_ of an SPN, there are three steps:
 3. The whole block $W_i$ is permuted using permutation ($pi_p$)
 
 ## DES{#sec:blockciphers:DES}
-> TODO
+DES is a Feistel cipher with 16 rounds, a key length of 56 bits and block length of 64 bits.
+It works on individual bits instead of bytes.
+
+Encryption: (Using _W_ for blocks, instead of _P_ for consistency)
+
+1. The 64 bits of a block, _W_, are permuted according to an initial fixed permutation, _IW_.
+2. 16 rounds of feistel operations, _f_, are applied. Each round uses a different 48 bit subkey
+3. a fixed inverse permuation, $IW^{-1}$, is applied.
+
+This results in one output ciphertext block.
+
+The feistel operation, _f_, consists of the following steps:
+
+1. Expand the 32 bit half-block to 48bits (to match the subkey)
+2. XOR the half-block and subkey
+3. break the 48 resulting bits into 8 chunks of 6 bits
+4. input each chunk in an individual S-box (substitution), output is 4 bits
+    - 8 substitutions that ouput 4 bits = 32 bit output in total
+5. apply permutation on output
+
+The 48 bit subkeys are defined as a series of permutations and shifts on the 56-bit master key.
+
+### Security of DES {#sec:blockciphers:DES:security}
+The short keys of DES is a weak point. There are $2^{56}$ possible keys, and on average that takes
+$2^{55}$ brute force trials to find the correct one. This is possible to do in practice.
+
+### Double DES {#sec:blockciphers:DES:double}
+If the algorithm is shit, double it!
+
+Double DES uses two keys and the plaintext block is encrypted twice, one encryption with each key.
+If both keys have a length of _k_, then there are $2^{2k}$ possible keys, which of course is better
+than standard DES.
+
+There exists a Meet-in-the-middle attack that allows you to spend more memory to reduce the time it
+takes to break the cipher. By storing one plaintext block, one encryption and one decryption for
+every key you can break the 2DES cipher with $2^{56}$ blocks, encryption and decryption operations
+-- which is easier than brute forcing $2^{111} (2^{2k-1})$ keys.
+
+### Triple DES {#sec:blockciphers:DES:triple}
+The only approved version of DES uses three keys. The encryption consists of encrypt-decrypt-encrypt
+(EDE): $C = E(D(E(W, K_1),K_2),K_3)$, which is secure from the meet-in-the-middle attack.
+
+There exists versions where some or all the keys are the same. This reduces safety.
+
+Keep in mind that only triple DES with three independent keys is approved for use. Having only two
+independent keys is allowed for legacy use only, which means you only use it to decrypt.
+
 
 ## AES{#sec:blockciphers:AES}
 Data blocks are always 128 bits, while the key length (and number of rounds) may vary. Supports 128,
-192 and 256bit master key lengths, each requiring 10, 12 or 14 rounds respectively.  This makes it a substitution-permutation network with _n_ = 128 and _l_ = 8.
-The structure of the AES cipher is a byte-based substitution-permutation network consisting of:
+192 and 256bit master key lengths, each requiring 10, 12 or 14 rounds respectively.  This makes it
+a substitution-permutation network with _n_ = 128 and _l_ = 8.
+The structure of the AES cipher is a byte-based (not bit based like DES) substitution-permutation
+network consisting of:
 
 1. initial round key addition (only AddRoundKey stage)
 2. (number of rounds - 1) rounds
@@ -138,7 +186,6 @@ AES represents each block as a 4x4 matrix of bytes (128 bits = 16 bytes, which i
 4. AddRoundKey
     - For every column, XOR with corresponding column of round key $K_i$
 
-### Key schedule {#sec:blockciphers:AES:key}
 The keys are also represented as a 4x4 matrix, similar to the blocks. This requires a 128bit subkey
 to be used in every round. These subkeys are derived from the master key. You'll need (number of
 rounds + 1) subkeys in total (since you need an initial subkey for the initial round).
@@ -151,7 +198,6 @@ know.
 
 
 # Block cipher modes of operation{#sec:blockciphermodes}
-
 Block ciphers encrypt blocks, but many of them are encrypted sequentially. This is generally
 insecure. Using different standardised _modes of operation_ with different levels of security and
 efficiency. This can also be used for authentication and integrity.
